@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2016.3 (64-bit)
+# SW Build 1682563 on Mon Oct 10 19:07:27 MDT 2016
+# IP Build 1681267 on Mon Oct 10 21:28:31 MDT 2016
+# Start of session at: Thu Mar 16 18:41:24 2017
+# Process ID: 3800
+# Current directory: C:/chirag/GVSUcourses/Winter17/EGR426/Projects/Project3_Mar23/cpu/cpu.runs/impl_1
+# Command line: vivado.exe -log cpu.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source cpu.tcl -notrace
+# Log file: C:/chirag/GVSUcourses/Winter17/EGR426/Projects/Project3_Mar23/cpu/cpu.runs/impl_1/cpu.vdi
+# Journal file: C:/chirag/GVSUcourses/Winter17/EGR426/Projects/Project3_Mar23/cpu/cpu.runs/impl_1\vivado.jou
+#-----------------------------------------------------------
+source cpu.tcl -notrace

@@ -1,0 +1,8 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/chirag/GVSUcourses/Winter17/EGR426/Projects/Project3_Mar23/cpu/cpu.srcs/sources_1/new/microram_sim.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity microram_sim
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/chirag/GVSUcourses/Winter17/EGR426/Projects/Project3_Mar23/cpu/cpu.srcs/sources_1/new/alu.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity alu
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/chirag/GVSUcourses/Winter17/EGR426/Projects/Project3_Mar23/cpu/cpu.srcs/sources_1/new/cpu.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity cpu
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/chirag/GVSUcourses/Winter17/EGR426/Projects/Project3_Mar23/cpu/cpu.srcs/sim_1/new/cputb1.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity cputb1

@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<Runs Version="1" Minor="0">
+	<Run Id="cpuram_synth_1" LaunchDir="C:/chirag/GVSUcourses/Winter17/EGR426/Projects/Project3_Mar23/cpu/cpu.runs/cpuram_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+</Runs>
+

@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2016.3 (64-bit)
+# SW Build 1682563 on Mon Oct 10 19:07:27 MDT 2016
+# IP Build 1681267 on Mon Oct 10 21:28:31 MDT 2016
+# Start of session at: Tue Apr 11 17:11:39 2017
+# Process ID: 568
+# Current directory: C:/chirag/GVSUcourses/Winter17/EGR426/Projects/Project3_Mar23/cpu/cpu.sim/sim_1/behav
+# Command line: wbtcv.exe -mode batch -source C:/chirag/GVSUcourses/Winter17/EGR426/Projects/Project3_Mar23/cpu/cpu.sim/sim_1/behav/xsim.dir/cputb1_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: C:/chirag/GVSUcourses/Winter17/EGR426/Projects/Project3_Mar23/cpu/cpu.sim/sim_1/behav/webtalk.log
+# Journal file: C:/chirag/GVSUcourses/Winter17/EGR426/Projects/Project3_Mar23/cpu/cpu.sim/sim_1/behav\webtalk.jou
+#-----------------------------------------------------------
+source C:/chirag/GVSUcourses/Winter17/EGR426/Projects/Project3_Mar23/cpu/cpu.sim/sim_1/behav/xsim.dir/cputb1_behav/webtalk/xsim_webtalk.tcl -notrace
