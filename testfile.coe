@@ -13,12 +13,12 @@ memory_initialization_vector =
 00001000
 01010000
 00000001
-00011101
+00001110
 10000000
 00001000
 01010000
 00000001
-00000101
+00001000
 ;
 
 
@@ -38,4 +38,4 @@ memory_initialization_vector =
 ; 11) OUT A
 ; 12) BCDO A - should be 7
 ; 13) 0x01
-; 14) 0x05
+; 14) 0x08

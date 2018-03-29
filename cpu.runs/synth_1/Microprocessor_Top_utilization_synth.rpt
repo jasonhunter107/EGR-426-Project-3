@@ -1,8 +1,8 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
-| Date         : Thu Mar 29 00:23:08 2018
-| Host         : 25thBam running 64-bit major release  (build 9200)
+| Tool Version : Vivado v.2017.2 (lin64) Build 1909853 Thu Jun 15 18:39:10 MDT 2017
+| Date         : Thu Mar 29 18:56:18 2018
+| Host         : jason-Latitude-E6220 running 64-bit Ubuntu 17.10
 | Command      : report_utilization -file Microprocessor_Top_utilization_synth.rpt -pb Microprocessor_Top_utilization_synth.pb
 | Design       : Microprocessor_Top
 | Device       : 7a35tcpg236-1
@@ -54,8 +54,8 @@ Table of Contents
 | 0     |            _ |         Set |            - |
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
-| 1     |          Yes |           - |          Set |
-| 114   |          Yes |           - |        Reset |
+| 13    |          Yes |           - |          Set |
+| 102   |          Yes |           - |        Reset |
 | 0     |          Yes |         Set |            - |
 | 50    |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
@@ -149,20 +149,20 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| FDCE     |  106 |        Flop & Latch |
+| FDCE     |   94 |        Flop & Latch |
 | LUT1     |   89 |                 LUT |
-| LUT6     |   69 |                 LUT |
-| LUT4     |   52 |                 LUT |
+| LUT6     |   67 |                 LUT |
+| LUT4     |   55 |                 LUT |
 | FDRE     |   50 |        Flop & Latch |
 | LUT3     |   39 |                 LUT |
-| LUT5     |   35 |                 LUT |
+| LUT5     |   34 |                 LUT |
 | OBUF     |   27 |                  IO |
 | CARRY4   |   24 |          CarryLogic |
-| LUT2     |   18 |                 LUT |
+| LUT2     |   19 |                 LUT |
 | IBUF     |   18 |                  IO |
+| FDPE     |   13 |        Flop & Latch |
 | LDCE     |    8 |        Flop & Latch |
 | BUFG     |    2 |               Clock |
-| FDPE     |    1 |        Flop & Latch |
 +----------+------+---------------------+
 
 

@@ -1,10 +1,10 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
--- Date        : Sat Mar 10 19:24:02 2018
--- Host        : DESKTOP-G7C4939 running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim -rename_top cpuram -prefix
---               cpuram_ cpuram_sim_netlist.vhdl
+-- Tool Version: Vivado v.2017.2 (lin64) Build 1909853 Thu Jun 15 18:39:10 MDT 2017
+-- Date        : Thu Mar 29 18:55:32 2018
+-- Host        : jason-Latitude-E6220 running 64-bit Ubuntu 17.10
+-- Command     : write_vhdl -force -mode funcsim
+--               /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/ip/cpuram/cpuram_sim_netlist.vhdl
 -- Design      : cpuram
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -22,6 +22,8 @@ entity cpuram_blk_mem_gen_prim_wrapper_init is
     dina : in STD_LOGIC_VECTOR ( 7 downto 0 );
     wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of cpuram_blk_mem_gen_prim_wrapper_init : entity is "blk_mem_gen_prim_wrapper_init";
 end cpuram_blk_mem_gen_prim_wrapper_init;
 
 architecture STRUCTURE of cpuram_blk_mem_gen_prim_wrapper_init is
@@ -68,8 +70,8 @@ begin
       INITP_05 => X"0000000000000000000000000000000000000000000000000000000000000000",
       INITP_06 => X"0000000000000000000000000000000000000000000000000000000000000000",
       INITP_07 => X"0000000000000000000000000000000000000000000000000000000000000000",
-      INIT_00 => X"0000020300000001000002000202000000000200000002020000000003030000",
-      INIT_01 => X"0000000000000000000000000000000000000101000000010000020002000000",
+      INIT_00 => X"0101000000000200020200000101000000000200000003010000000003030000",
+      INIT_01 => X"0000000000000200000000010101000000000200020000000000030200000001",
       INIT_02 => X"0000000000000000000000000000000000000000000000000000000000000000",
       INIT_03 => X"0000000000000000000000000000000000000000000000000000000000000000",
       INIT_04 => X"0000000000000000000000000000000000000000000000000000000000000000",
@@ -234,6 +236,8 @@ entity cpuram_blk_mem_gen_prim_width is
     dina : in STD_LOGIC_VECTOR ( 7 downto 0 );
     wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of cpuram_blk_mem_gen_prim_width : entity is "blk_mem_gen_prim_width";
 end cpuram_blk_mem_gen_prim_width;
 
 architecture STRUCTURE of cpuram_blk_mem_gen_prim_width is
@@ -259,6 +263,8 @@ entity cpuram_blk_mem_gen_generic_cstr is
     dina : in STD_LOGIC_VECTOR ( 7 downto 0 );
     wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of cpuram_blk_mem_gen_generic_cstr : entity is "blk_mem_gen_generic_cstr";
 end cpuram_blk_mem_gen_generic_cstr;
 
 architecture STRUCTURE of cpuram_blk_mem_gen_generic_cstr is
@@ -284,6 +290,8 @@ entity cpuram_blk_mem_gen_top is
     dina : in STD_LOGIC_VECTOR ( 7 downto 0 );
     wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of cpuram_blk_mem_gen_top : entity is "blk_mem_gen_top";
 end cpuram_blk_mem_gen_top;
 
 architecture STRUCTURE of cpuram_blk_mem_gen_top is
@@ -309,6 +317,8 @@ entity cpuram_blk_mem_gen_v8_3_6_synth is
     dina : in STD_LOGIC_VECTOR ( 7 downto 0 );
     wea : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of cpuram_blk_mem_gen_v8_3_6_synth : entity is "blk_mem_gen_v8_3_6_synth";
 end cpuram_blk_mem_gen_v8_3_6_synth;
 
 architecture STRUCTURE of cpuram_blk_mem_gen_v8_3_6_synth is
@@ -538,6 +548,8 @@ entity cpuram_blk_mem_gen_v8_3_6 is
   attribute C_WRITE_WIDTH_B of cpuram_blk_mem_gen_v8_3_6 : entity is 8;
   attribute C_XDEVICEFAMILY : string;
   attribute C_XDEVICEFAMILY of cpuram_blk_mem_gen_v8_3_6 : entity is "artix7";
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of cpuram_blk_mem_gen_v8_3_6 : entity is "blk_mem_gen_v8_3_6";
   attribute downgradeipidentifiedwarnings : string;
   attribute downgradeipidentifiedwarnings of cpuram_blk_mem_gen_v8_3_6 : entity is "yes";
 end cpuram_blk_mem_gen_v8_3_6;

@@ -1,8 +1,8 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
-| Date         : Thu Mar 29 00:23:43 2018
-| Host         : 25thBam running 64-bit major release  (build 9200)
+| Tool Version : Vivado v.2017.2 (lin64) Build 1909853 Thu Jun 15 18:39:10 MDT 2017
+| Date         : Thu Mar 29 18:56:50 2018
+| Host         : jason-Latitude-E6220 running 64-bit Ubuntu 17.10
 | Command      : report_control_sets -verbose -file Microprocessor_Top_control_sets_placed.rpt
 | Design       : Microprocessor_Top
 | Device       : xc7a35t
@@ -23,7 +23,7 @@ Table of Contents
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
 | Number of unique control sets                            |    15 |
-| Unused register locations in slices containing registers |    43 |
+| Unused register locations in slices containing registers |    35 |
 +----------------------------------------------------------+-------+
 
 
@@ -37,7 +37,7 @@ Table of Contents
 | No           | No                    | Yes                    |               4 |            3 |
 | No           | Yes                   | No                     |              48 |           12 |
 | Yes          | No                    | No                     |               0 |            0 |
-| Yes          | No                    | Yes                    |             103 |           32 |
+| Yes          | No                    | Yes                    |             103 |           29 |
 | Yes          | Yes                   | No                     |               0 |            0 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
@@ -51,15 +51,15 @@ Table of Contents
 |  clk_IBUF_BUFG              |                        |                            |                2 |              2 |
 |  clkout_1Hz_BUFG            |                        | reset_IBUF                 |                2 |              2 |
 |  cd1/CLK                    |                        | reset_IBUF                 |                1 |              2 |
-|  c1/tempOut0_reg[3]_i_2_n_0 |                        |                            |                1 |              4 |
-|  c1/tempOut1_reg[3]_i_1_n_0 |                        |                            |                3 |              4 |
-|  clkout_1Hz_BUFG            | c1/A[7]_i_1_n_0        | reset_IBUF                 |                3 |              8 |
-|  clkout_1Hz_BUFG            | c1/IR[7]_i_1_n_0       | reset_IBUF                 |                4 |              8 |
+|  clkout_1Hz_BUFG            | c1/A[7]_i_1_n_0        | reset_IBUF                 |                4 |              8 |
 |  clkout_1Hz_BUFG            | c1/B[7]_i_1_n_0        | reset_IBUF                 |                3 |              8 |
+|  clkout_1Hz_BUFG            | c1/IR[7]_i_1_n_0       | reset_IBUF                 |                2 |              8 |
+|  clkout_1Hz_BUFG            | c1/Ledport0[7]_i_1_n_0 | reset_IBUF                 |                2 |              8 |
+|  clkout_1Hz_BUFG            | c1/Ledport1[7]_i_1_n_0 | reset_IBUF                 |                3 |              8 |
 |  clkout_1Hz_BUFG            | c1/MDR[7]_i_1_n_0      | reset_IBUF                 |                2 |              8 |
+|  c1/tempOut0_reg[3]_i_2_n_0 |                        |                            |                4 |              8 |
 |  clkout_1Hz_BUFG            | c1/U2/E[0]             | reset_IBUF                 |                3 |              9 |
-|  clkout_1Hz_BUFG            | c1/Ledport0[7]_i_1_n_0 | reset_IBUF                 |                4 |             15 |
-|  clkout_1Hz_BUFG            | c1/Ledport1[7]_i_1_n_0 | reset_IBUF                 |                5 |             15 |
+|  clkout_1Hz_BUFG            | c1/Outport0[6]_i_1_n_0 | reset_IBUF                 |                2 |             14 |
 |  clk_IBUF_BUFG              |                        | cd1/clkCounter1[0]_i_1_n_0 |                5 |             20 |
 |  clk_IBUF_BUFG              |                        | cd1/clear                  |                7 |             28 |
 |  clkout_1Hz_BUFG            | c1/U2/temp_reg[0]      | reset_IBUF                 |                8 |             32 |
@@ -70,10 +70,9 @@ Table of Contents
 | Fanout | Number of ControlSets |
 +--------+-----------------------+
 | 2      |                     3 |
-| 4      |                     2 |
-| 8      |                     4 |
+| 8      |                     7 |
 | 9      |                     1 |
-| 15     |                     2 |
+| 14     |                     1 |
 | 16+    |                     3 |
 +--------+-----------------------+
 

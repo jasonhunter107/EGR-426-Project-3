@@ -52,6 +52,7 @@ process (clk, reset)
 begin
     if(reset = '1') then
     count <= "00";
+    --tempAn <= "1111";
     elsif (clk'event and rising_edge(clk)) then
     
      if (count = "11") then

@@ -1,10 +1,10 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
--- Date        : Sat Mar 10 19:24:02 2018
--- Host        : DESKTOP-G7C4939 running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode synth_stub -rename_top cpuram -prefix
---               cpuram_ cpuram_stub.vhdl
+-- Tool Version: Vivado v.2017.2 (lin64) Build 1909853 Thu Jun 15 18:39:10 MDT 2017
+-- Date        : Thu Mar 29 18:55:32 2018
+-- Host        : jason-Latitude-E6220 running 64-bit Ubuntu 17.10
+-- Command     : write_vhdl -force -mode synth_stub
+--               /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/ip/cpuram/cpuram_stub.vhdl
 -- Design      : cpuram
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7a35tcpg236-1

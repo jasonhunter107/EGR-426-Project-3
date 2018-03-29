@@ -140,6 +140,7 @@ end function;
 signal Exc_RegWrite : STD_LOGIC;        -- Latch data bus in A or B
 signal Exc_CCWrite : STD_LOGIC;         -- Latch ALU status bits in CCR
 signal Exc_IOWrite : STD_LOGIC;         -- Latch data bus in I/O
+signal Exc_BCDO : STD_LOGIC;
 
 ----------------------------Temp Outport variables----------------------
 signal tempOut0, tempOut1 : STD_LOGIC_VECTOR (3 downto 0) := (others => '0');
@@ -195,8 +196,8 @@ begin
 	 V <= '0';
 	 Ledport0 <= (others => '0');
 	 Ledport1 <= (others => '0');
-	 Outport0 <= (others => '0');
-     Outport1 <= (others => '0');
+	 Outport0 <= "1111110";
+     Outport1 <= "1111110";
 	 temp := 0;
   elsif(rising_edge(clk)) then
 	 case CurrState is
@@ -238,11 +239,22 @@ begin
 
 					     if(Exc_IOWrite = '1') then    -- Write to Outport0 or OutPort1
 						    if(IR(1) = '0') then
+						      if (Exc_BCDO = '1') then
 							   Ledport0 <= DATA;
 							   Outport0 <= Decoder(tempOut0); --Call decoder function to decode the number to seven segment
-						    else
-							   Ledport1 <= DATA;
 							   Outport1 <= Decoder(tempOut1);
+							   
+							   else
+							   Ledport0 <= DATA;
+							   end if;
+						    else
+						      if (Exc_BCDO = '1') then
+							   Ledport1 <= DATA;
+							   Outport0 <= Decoder(tempOut0); --Call decoder function to decode the number to seven segment
+							   Outport1 <= Decoder(tempOut1);
+							   else
+							   Ledport1 <= DATA;
+							   end if;
 						    end if;
 					     end if;
 					
@@ -259,6 +271,7 @@ begin
 Exc_RegWrite <= '0';
 Exc_CCWrite <= '0';
 Exc_IOWrite <= '0';
+Exc_BCDO <= '0';
 
 -- Same idea
 ALU_A <= A;
@@ -322,11 +335,14 @@ case CurrState is
                                if(IR(0) = '0') then
                                DATA <= STD_LOGIC_VECTOR(A);
                                tempOut0 <= DATA(3 downto 0); --Take lower 4 bits
+                               tempOut1 <= DATA(7 downto 4); --Tale upper 4 bits
                                else
                                DATA <= STD_LOGIC_VECTOR(B);
+                               tempOut0 <= DATA(3 downto 0); --Take lower 4 bits
                                tempOut1 <= DATA(7 downto 4); --Tale upper 4 bits
                                end if;
-                               Exc_IOWrite <= '1';       
+                               Exc_IOWrite <= '1'; 
+                               Exc_BCDO <= '1';      
 						
 					      when "0000010"|"0000011" =>	       -- STOR R,M
 						        null;

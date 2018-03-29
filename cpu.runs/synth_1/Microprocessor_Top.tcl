@@ -3,32 +3,31 @@
 # 
 
 set_param xicom.use_bs_reader 1
-set_msg_config -id {Common 17-41} -limit 10000000
 create_project -in_memory -part xc7a35tcpg236-1
 
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir {C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.cache/wt} [current_project]
-set_property parent.project_path {C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.xpr} [current_project]
+set_property webtalk.parent_dir /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.cache/wt [current_project]
+set_property parent.project_path /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.xpr [current_project]
 set_property XPM_LIBRARIES XPM_MEMORY [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language VHDL [current_project]
-set_property ip_output_repo {c:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.cache/ip} [current_project]
+set_property ip_output_repo /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
-add_files {{C:/Users/Jason/Desktop/EGR 426/Project3/cpu/testfile.coe}}
+add_files /home/jason/Documents/EGR426/EGR-426-Project-3/testfile.coe
 read_vhdl -library xil_defaultlib {
-  {C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/SevenSeg_MUX.vhd}
-  {C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/alu.vhd}
-  {C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/clk_divider.vhd}
-  {C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd}
-  {C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/microram.vhd}
-  {C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/Microprocessor_Top.vhd}
+  /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/SevenSeg_MUX.vhd
+  /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/alu.vhd
+  /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/clk_divider.vhd
+  /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd
+  /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/microram.vhd
+  /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/Microprocessor_Top.vhd
 }
-read_ip -quiet {{C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/ip/cpuram/cpuram.xci}}
-set_property used_in_implementation false [get_files -all {{c:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/ip/cpuram/cpuram_ooc.xdc}}]
-set_property is_locked true [get_files {{C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/ip/cpuram/cpuram.xci}}]
+read_ip -quiet /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/ip/cpuram/cpuram.xci
+set_property used_in_implementation false [get_files -all /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/ip/cpuram/cpuram_ooc.xdc]
+set_property is_locked true [get_files /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/ip/cpuram/cpuram.xci]
 
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the
@@ -38,8 +37,8 @@ set_property is_locked true [get_files {{C:/Users/Jason/Desktop/EGR 426/Project3
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc {{C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/constrs_1/new/cpu_pins.xdc}}
-set_property used_in_implementation false [get_files {{C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/constrs_1/new/cpu_pins.xdc}}]
+read_xdc /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/constrs_1/new/cpu_pins.xdc
+set_property used_in_implementation false [get_files /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/constrs_1/new/cpu_pins.xdc]
 
 
 synth_design -top Microprocessor_Top -part xc7a35tcpg236-1

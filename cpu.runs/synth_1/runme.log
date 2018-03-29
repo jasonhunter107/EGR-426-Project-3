@@ -4,55 +4,52 @@
 
 
 ****** Vivado v2017.2 (64-bit)
-  **** SW Build 1909853 on Thu Jun 15 18:39:09 MDT 2017
+  **** SW Build 1909853 on Thu Jun 15 18:39:10 MDT 2017
   **** IP Build 1909766 on Thu Jun 15 19:58:00 MDT 2017
     ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 
 source Microprocessor_Top.tcl -notrace
 Command: synth_design -top Microprocessor_Top -part xc7a35tcpg236-1
 Starting synth_design
-WARNING: [Vivado_Tcl 4-393] The 'Synthesis' target of the following IPs are stale, please generate the output products using the generate_target or synth_ip command before running synth_design.
-C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/ip/cpuram/cpuram.xci
-
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t-cpg236'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t-cpg236'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 1556 
+INFO: Helper process launched with PID 20077 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 319.258 ; gain = 81.863
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1156.156 ; gain = 55.992 ; free physical = 2119 ; free virtual = 6356
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'Microprocessor_Top' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/Microprocessor_Top.vhd:36]
-INFO: [Synth 8-3491] module 'cpu' declared at 'C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:38' bound to instance 'c1' of component 'cpu' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/Microprocessor_Top.vhd:66]
-INFO: [Synth 8-638] synthesizing module 'cpu' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:46]
-INFO: [Synth 8-3491] module 'alu' declared at 'C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/alu.vhd:38' bound to instance 'U1' of component 'alu' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:150]
-INFO: [Synth 8-638] synthesizing module 'alu' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/alu.vhd:45]
-WARNING: [Synth 8-6014] Unused sequential element RETVAL_reg was removed.  [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/alu.vhd:65]
-INFO: [Synth 8-256] done synthesizing module 'alu' (1#1) [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/alu.vhd:45]
-INFO: [Synth 8-3491] module 'microram' declared at 'C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/microram.vhd:37' bound to instance 'U2' of component 'microram' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:156]
-INFO: [Synth 8-638] synthesizing module 'microram' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/microram.vhd:46]
-INFO: [Synth 8-3491] module 'cpuram' declared at 'C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.runs/synth_1/.Xil/Vivado-10980-25thBam/realtime/cpuram_stub.vhdl:5' bound to instance 'U1' of component 'cpuram' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/microram.vhd:60]
-INFO: [Synth 8-638] synthesizing module 'cpuram' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.runs/synth_1/.Xil/Vivado-10980-25thBam/realtime/cpuram_stub.vhdl:16]
-INFO: [Synth 8-256] done synthesizing module 'microram' (2#1) [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/microram.vhd:46]
-INFO: [Synth 8-226] default block is never used [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:174]
-INFO: [Synth 8-226] default block is never used [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:202]
-WARNING: [Synth 8-614] signal 'DATA' is read in the process but is not in the sensitivity list [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:255]
-WARNING: [Synth 8-6014] Unused sequential element V_reg was removed.  [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:195]
-WARNING: [Synth 8-6014] Unused sequential element N_reg was removed.  [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:193]
-WARNING: [Synth 8-6014] Unused sequential element Z_reg was removed.  [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:194]
-WARNING: [Synth 8-6014] Unused sequential element Exc_CCWrite_reg was removed.  [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:233]
-INFO: [Synth 8-256] done synthesizing module 'cpu' (3#1) [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:46]
-INFO: [Synth 8-3491] module 'clk_divider' declared at 'C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/clk_divider.vhd:35' bound to instance 'cd1' of component 'clk_divider' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/Microprocessor_Top.vhd:69]
-INFO: [Synth 8-638] synthesizing module 'clk_divider' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/clk_divider.vhd:41]
-INFO: [Synth 8-256] done synthesizing module 'clk_divider' (4#1) [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/clk_divider.vhd:41]
-INFO: [Synth 8-3491] module 'SevenSeg_MUX' declared at 'C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/SevenSeg_MUX.vhd:35' bound to instance 'M1' of component 'SevenSeg_MUX' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/Microprocessor_Top.vhd:71]
-INFO: [Synth 8-638] synthesizing module 'SevenSeg_MUX' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/SevenSeg_MUX.vhd:43]
-WARNING: [Synth 8-614] signal 'LeftSeg' is read in the process but is not in the sensitivity list [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/SevenSeg_MUX.vhd:69]
-WARNING: [Synth 8-614] signal 'RightSeg' is read in the process but is not in the sensitivity list [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/SevenSeg_MUX.vhd:69]
-INFO: [Synth 8-256] done synthesizing module 'SevenSeg_MUX' (5#1) [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/SevenSeg_MUX.vhd:43]
-INFO: [Synth 8-256] done synthesizing module 'Microprocessor_Top' (6#1) [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/Microprocessor_Top.vhd:36]
+INFO: [Synth 8-638] synthesizing module 'Microprocessor_Top' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/Microprocessor_Top.vhd:36]
+INFO: [Synth 8-3491] module 'cpu' declared at '/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:38' bound to instance 'c1' of component 'cpu' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/Microprocessor_Top.vhd:66]
+INFO: [Synth 8-638] synthesizing module 'cpu' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:46]
+INFO: [Synth 8-3491] module 'alu' declared at '/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/alu.vhd:38' bound to instance 'U1' of component 'alu' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:151]
+INFO: [Synth 8-638] synthesizing module 'alu' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/alu.vhd:45]
+WARNING: [Synth 8-6014] Unused sequential element RETVAL_reg was removed.  [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/alu.vhd:65]
+INFO: [Synth 8-256] done synthesizing module 'alu' (1#1) [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/alu.vhd:45]
+INFO: [Synth 8-3491] module 'microram' declared at '/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/microram.vhd:37' bound to instance 'U2' of component 'microram' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:157]
+INFO: [Synth 8-638] synthesizing module 'microram' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/microram.vhd:46]
+INFO: [Synth 8-3491] module 'cpuram' declared at '/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.runs/synth_1/.Xil/Vivado-20032-jason-Latitude-E6220/realtime/cpuram_stub.vhdl:5' bound to instance 'U1' of component 'cpuram' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/microram.vhd:60]
+INFO: [Synth 8-638] synthesizing module 'cpuram' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.runs/synth_1/.Xil/Vivado-20032-jason-Latitude-E6220/realtime/cpuram_stub.vhdl:16]
+INFO: [Synth 8-256] done synthesizing module 'microram' (2#1) [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/microram.vhd:46]
+INFO: [Synth 8-226] default block is never used [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:175]
+INFO: [Synth 8-226] default block is never used [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:203]
+WARNING: [Synth 8-614] signal 'DATA' is read in the process but is not in the sensitivity list [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:267]
+WARNING: [Synth 8-6014] Unused sequential element V_reg was removed.  [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:196]
+WARNING: [Synth 8-6014] Unused sequential element N_reg was removed.  [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:194]
+WARNING: [Synth 8-6014] Unused sequential element Z_reg was removed.  [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:195]
+WARNING: [Synth 8-6014] Unused sequential element Exc_CCWrite_reg was removed.  [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:234]
+INFO: [Synth 8-256] done synthesizing module 'cpu' (3#1) [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:46]
+INFO: [Synth 8-3491] module 'clk_divider' declared at '/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/clk_divider.vhd:35' bound to instance 'cd1' of component 'clk_divider' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/Microprocessor_Top.vhd:69]
+INFO: [Synth 8-638] synthesizing module 'clk_divider' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/clk_divider.vhd:41]
+INFO: [Synth 8-256] done synthesizing module 'clk_divider' (4#1) [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/clk_divider.vhd:41]
+INFO: [Synth 8-3491] module 'SevenSeg_MUX' declared at '/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/SevenSeg_MUX.vhd:35' bound to instance 'M1' of component 'SevenSeg_MUX' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/Microprocessor_Top.vhd:71]
+INFO: [Synth 8-638] synthesizing module 'SevenSeg_MUX' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/SevenSeg_MUX.vhd:43]
+WARNING: [Synth 8-614] signal 'LeftSeg' is read in the process but is not in the sensitivity list [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/SevenSeg_MUX.vhd:70]
+WARNING: [Synth 8-614] signal 'RightSeg' is read in the process but is not in the sensitivity list [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/SevenSeg_MUX.vhd:70]
+INFO: [Synth 8-256] done synthesizing module 'SevenSeg_MUX' (5#1) [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/SevenSeg_MUX.vhd:43]
+INFO: [Synth 8-256] done synthesizing module 'Microprocessor_Top' (6#1) [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/Microprocessor_Top.vhd:36]
 WARNING: [Synth 8-3331] design clk_divider has unconnected port reset
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 369.688 ; gain = 132.293
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1197.656 ; gain = 97.492 ; free physical = 2120 ; free virtual = 6357
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -62,41 +59,41 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 369.688 ; gain = 132.293
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1197.656 ; gain = 97.492 ; free physical = 2119 ; free virtual = 6356
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7a35tcpg236-1
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.runs/synth_1/.Xil/Vivado-10980-25thBam/dcp3/cpuram_in_context.xdc] for cell 'c1/U2/U1'
-Finished Parsing XDC File [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.runs/synth_1/.Xil/Vivado-10980-25thBam/dcp3/cpuram_in_context.xdc] for cell 'c1/U2/U1'
-Parsing XDC File [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/constrs_1/new/cpu_pins.xdc]
-Finished Parsing XDC File [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/constrs_1/new/cpu_pins.xdc]
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/constrs_1/new/cpu_pins.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/Microprocessor_Top_propImpl.xdc].
+Parsing XDC File [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.runs/synth_1/.Xil/Vivado-20032-jason-Latitude-E6220/dcp3/cpuram_in_context.xdc] for cell 'c1/U2/U1'
+Finished Parsing XDC File [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.runs/synth_1/.Xil/Vivado-20032-jason-Latitude-E6220/dcp3/cpuram_in_context.xdc] for cell 'c1/U2/U1'
+Parsing XDC File [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/constrs_1/new/cpu_pins.xdc]
+Finished Parsing XDC File [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/constrs_1/new/cpu_pins.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/constrs_1/new/cpu_pins.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/Microprocessor_Top_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/Microprocessor_Top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 683.965 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1507.344 ; gain = 0.000 ; free physical = 1627 ; free virtual = 5867
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 683.965 ; gain = 446.570
+Finished Constraint Validation : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 1507.344 ; gain = 407.180 ; free physical = 1688 ; free virtual = 5943
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcpg236-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 683.965 ; gain = 446.570
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 1507.344 ; gain = 407.180 ; free physical = 1687 ; free virtual = 5943
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property DONT_TOUCH = true for c1/U2/U1. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 683.965 ; gain = 446.570
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 1507.344 ; gain = 407.180 ; free physical = 1679 ; free virtual = 5934
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5546] ROM "V" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "Z" won't be mapped to RAM because it is too sparse
@@ -104,14 +101,15 @@ INFO: [Synth 8-5545] ROM "PC" won't be mapped to RAM because address size (32) i
 INFO: [Synth 8-5545] ROM "temp" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
 INFO: [Synth 8-5546] ROM "Exc_RegWrite" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "Exc_IOWrite" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "Exc_BCDO" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "RETVAL" won't be mapped to RAM because it is too sparse
-WARNING: [Synth 8-6014] Unused sequential element temp_reg was removed.  [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:200]
-WARNING: [Synth 8-6014] Unused sequential element clkCounter_reg was removed.  [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/clk_divider.vhd:60]
-WARNING: [Synth 8-6014] Unused sequential element clkCounter1_reg was removed.  [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/clk_divider.vhd:73]
-WARNING: [Synth 8-327] inferring latch for variable 'tempOut0_reg' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:242]
-WARNING: [Synth 8-327] inferring latch for variable 'tempOut1_reg' [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:245]
+WARNING: [Synth 8-6014] Unused sequential element temp_reg was removed.  [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:201]
+WARNING: [Synth 8-6014] Unused sequential element clkCounter_reg was removed.  [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/clk_divider.vhd:60]
+WARNING: [Synth 8-6014] Unused sequential element clkCounter1_reg was removed.  [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/clk_divider.vhd:73]
+WARNING: [Synth 8-327] inferring latch for variable 'tempOut0_reg' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:244]
+WARNING: [Synth 8-327] inferring latch for variable 'tempOut1_reg' [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:245]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 683.965 ; gain = 446.570
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 1507.344 ; gain = 407.180 ; free physical = 1638 ; free virtual = 5893
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -149,9 +147,9 @@ Detailed RTL Component Info :
 	   4 Input      2 Bit        Muxes := 1     
 	   9 Input      1 Bit        Muxes := 1     
 	   2 Input      1 Bit        Muxes := 3     
-	   4 Input      1 Bit        Muxes := 8     
+	   4 Input      1 Bit        Muxes := 9     
 	  10 Input      1 Bit        Muxes := 2     
-	   8 Input      1 Bit        Muxes := 2     
+	   8 Input      1 Bit        Muxes := 1     
 	   3 Input      1 Bit        Muxes := 2     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
@@ -188,10 +186,10 @@ Detailed RTL Component Info :
 	   8 Input      2 Bit        Muxes := 1     
 	   2 Input      2 Bit        Muxes := 1     
 	   4 Input      2 Bit        Muxes := 1     
-	   4 Input      1 Bit        Muxes := 8     
+	   4 Input      1 Bit        Muxes := 9     
 	  10 Input      1 Bit        Muxes := 2     
 	   2 Input      1 Bit        Muxes := 2     
-	   8 Input      1 Bit        Muxes := 2     
+	   8 Input      1 Bit        Muxes := 1     
 	   3 Input      1 Bit        Muxes := 2     
 Module clk_divider 
 Detailed RTL Component Info : 
@@ -222,13 +220,14 @@ Finished Part Resource Summary
 ---------------------------------------------------------------------------------
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-5546] ROM "c1/Exc_BCDO" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5545] ROM "c1/temp" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
 INFO: [Synth 8-5545] ROM "c1/PC" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
-WARNING: [Synth 8-6014] Unused sequential element c1/temp_reg was removed.  [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/cpu.vhd:200]
-WARNING: [Synth 8-6014] Unused sequential element cd1/clkCounter_reg was removed.  [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/clk_divider.vhd:60]
-WARNING: [Synth 8-6014] Unused sequential element cd1/clkCounter1_reg was removed.  [C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/new/clk_divider.vhd:73]
+WARNING: [Synth 8-6014] Unused sequential element c1/temp_reg was removed.  [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:201]
+WARNING: [Synth 8-6014] Unused sequential element cd1/clkCounter_reg was removed.  [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/clk_divider.vhd:60]
+WARNING: [Synth 8-6014] Unused sequential element cd1/clkCounter1_reg was removed.  [/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/new/clk_divider.vhd:73]
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:18 . Memory (MB): peak = 683.965 ; gain = 446.570
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1507.344 ; gain = 407.180 ; free physical = 1624 ; free virtual = 5878
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -240,13 +239,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 683.965 ; gain = 446.570
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 1507.344 ; gain = 407.180 ; free physical = 1483 ; free virtual = 5733
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 683.965 ; gain = 446.570
+Finished Timing Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 1507.344 ; gain = 407.180 ; free physical = 1484 ; free virtual = 5733
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -258,7 +257,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 706.301 ; gain = 468.906
+Finished Technology Mapping : Time (s): cpu = 00:00:30 ; elapsed = 00:00:32 . Memory (MB): peak = 1515.352 ; gain = 415.188 ; free physical = 1481 ; free virtual = 5730
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -282,7 +281,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 706.301 ; gain = 468.906
+Finished IO Insertion : Time (s): cpu = 00:00:30 ; elapsed = 00:00:32 . Memory (MB): peak = 1515.352 ; gain = 415.188 ; free physical = 1505 ; free virtual = 5755
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -295,7 +294,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 706.301 ; gain = 468.906
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:30 ; elapsed = 00:00:32 . Memory (MB): peak = 1515.352 ; gain = 415.188 ; free physical = 1505 ; free virtual = 5755
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -307,25 +306,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 706.301 ; gain = 468.906
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:31 ; elapsed = 00:00:32 . Memory (MB): peak = 1515.352 ; gain = 415.188 ; free physical = 1505 ; free virtual = 5755
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 706.301 ; gain = 468.906
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:31 ; elapsed = 00:00:32 . Memory (MB): peak = 1515.352 ; gain = 415.188 ; free physical = 1505 ; free virtual = 5755
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:27 ; elapsed = 00:00:30 . Memory (MB): peak = 706.301 ; gain = 468.906
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:31 ; elapsed = 00:00:32 . Memory (MB): peak = 1515.352 ; gain = 415.188 ; free physical = 1505 ; free virtual = 5755
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:27 ; elapsed = 00:00:30 . Memory (MB): peak = 706.301 ; gain = 468.906
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:31 ; elapsed = 00:00:32 . Memory (MB): peak = 1515.352 ; gain = 415.188 ; free physical = 1505 ; free virtual = 5755
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -346,13 +345,13 @@ Report Cell Usage:
 |2     |BUFG        |     2|
 |3     |CARRY4      |    24|
 |4     |LUT1        |    89|
-|5     |LUT2        |    18|
+|5     |LUT2        |    19|
 |6     |LUT3        |    39|
-|7     |LUT4        |    52|
-|8     |LUT5        |    35|
-|9     |LUT6        |    69|
-|10    |FDCE        |   106|
-|11    |FDPE        |     1|
+|7     |LUT4        |    55|
+|8     |LUT5        |    34|
+|9     |LUT6        |    67|
+|10    |FDCE        |    94|
+|11    |FDPE        |    13|
 |12    |FDRE        |    50|
 |13    |LD          |     8|
 |14    |IBUF        |    18|
@@ -363,19 +362,19 @@ Report Instance Areas:
 +------+---------+-------------+------+
 |      |Instance |Module       |Cells |
 +------+---------+-------------+------+
-|1     |top      |             |   546|
+|1     |top      |             |   547|
 |2     |  M1     |SevenSeg_MUX |    14|
 |3     |  c1     |cpu          |   365|
 |4     |    U1   |alu          |     2|
-|5     |    U2   |microram     |   163|
-|6     |  cd1    |clk_divider  |   120|
+|5     |    U2   |microram     |   158|
+|6     |  cd1    |clk_divider  |   121|
 +------+---------+-------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:27 ; elapsed = 00:00:30 . Memory (MB): peak = 706.301 ; gain = 468.906
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:31 ; elapsed = 00:00:32 . Memory (MB): peak = 1515.352 ; gain = 415.188 ; free physical = 1505 ; free virtual = 5755
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 8 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:17 ; elapsed = 00:00:23 . Memory (MB): peak = 706.301 ; gain = 154.629
-Synthesis Optimization Complete : Time (s): cpu = 00:00:27 ; elapsed = 00:00:30 . Memory (MB): peak = 706.301 ; gain = 468.906
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1515.352 ; gain = 105.500 ; free physical = 1558 ; free virtual = 5807
+Synthesis Optimization Complete : Time (s): cpu = 00:00:31 ; elapsed = 00:00:32 . Memory (MB): peak = 1515.359 ; gain = 415.188 ; free physical = 1559 ; free virtual = 5809
 INFO: [Project 1-571] Translating synthesized netlist
 INFO: [Netlist 29-17] Analyzing 50 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
@@ -385,9 +384,9 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 8 instances were transformed.
   LD => LDCE: 8 instances
 
-41 Infos, 18 Warnings, 0 Critical Warnings and 0 Errors encountered.
+43 Infos, 17 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:29 ; elapsed = 00:00:33 . Memory (MB): peak = 706.301 ; gain = 473.633
-INFO: [Common 17-1381] The checkpoint 'C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.runs/synth_1/Microprocessor_Top.dcp' has been generated.
-report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 706.301 ; gain = 0.000
-INFO: [Common 17-206] Exiting Vivado at Thu Mar 29 00:23:08 2018...
+synth_design: Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1515.359 ; gain = 427.785 ; free physical = 1532 ; free virtual = 5782
+INFO: [Common 17-1381] The checkpoint '/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.runs/synth_1/Microprocessor_Top.dcp' has been generated.
+report_utilization: Time (s): cpu = 00:00:00.10 ; elapsed = 00:00:00.13 . Memory (MB): peak = 1539.363 ; gain = 0.000 ; free physical = 1532 ; free virtual = 5782
+INFO: [Common 17-206] Exiting Vivado at Thu Mar 29 18:56:18 2018...

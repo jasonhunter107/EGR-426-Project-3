@@ -42,7 +42,6 @@ proc step_failed { step } {
   close $ch
 }
 
-set_msg_config -id {Common 17-41} -limit 10000000
 
 start_step init_design
 set ACTIVE_STEP init_design
@@ -52,15 +51,15 @@ set rc [catch {
   create_project -in_memory -part xc7a35tcpg236-1
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
-  set_property webtalk.parent_dir {C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.cache/wt} [current_project]
-  set_property parent.project_path {C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.xpr} [current_project]
-  set_property ip_output_repo {{C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.cache/ip}} [current_project]
+  set_property webtalk.parent_dir /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.cache/wt [current_project]
+  set_property parent.project_path /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.xpr [current_project]
+  set_property ip_output_repo /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES XPM_MEMORY [current_project]
-  add_files -quiet {{C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.runs/synth_1/Microprocessor_Top.dcp}}
-  read_ip -quiet {{C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/ip/cpuram/cpuram.xci}}
-  set_property is_locked true [get_files {{C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/sources_1/ip/cpuram/cpuram.xci}}]
-  read_xdc {{C:/Users/Jason/Desktop/EGR 426/Project3/cpu/cpu.srcs/constrs_1/new/cpu_pins.xdc}}
+  add_files -quiet /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.runs/synth_1/Microprocessor_Top.dcp
+  read_ip -quiet /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/ip/cpuram/cpuram.xci
+  set_property is_locked true [get_files /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/ip/cpuram/cpuram.xci]
+  read_xdc /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/constrs_1/new/cpu_pins.xdc
   link_design -top Microprocessor_Top -part xc7a35tcpg236-1
   close_msg_db -file init_design.pb
 } RESULT]

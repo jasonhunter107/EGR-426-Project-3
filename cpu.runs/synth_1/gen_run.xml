@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1522297348">
-  <File Type="RDS-PROPCONSTRS" Name="Microprocessor_Top_drc_synth.rpt"/>
+<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1522364052">
   <File Type="PA-TCL" Name="Microprocessor_Top.tcl"/>
   <File Type="RDS-RDS" Name="Microprocessor_Top.vds"/>
-  <File Type="RDS-UTIL" Name="Microprocessor_Top_utilization_synth.rpt"/>
-  <File Type="RDS-UTIL-PB" Name="Microprocessor_Top_utilization_synth.pb"/>
-  <File Type="RDS-DCP" Name="Microprocessor_Top.dcp"/>
   <File Type="VDS-TIMINGSUMMARY" Name="Microprocessor_Top_timing_summary_synth.rpt"/>
   <File Type="VDS-TIMING-PB" Name="Microprocessor_Top_timing_summary_synth.pb"/>
+  <File Type="RDS-DCP" Name="Microprocessor_Top.dcp"/>
+  <File Type="RDS-UTIL-PB" Name="Microprocessor_Top_utilization_synth.pb"/>
+  <File Type="RDS-UTIL" Name="Microprocessor_Top_utilization_synth.rpt"/>
+  <File Type="RDS-PROPCONSTRS" Name="Microprocessor_Top_drc_synth.rpt"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/new/SevenSeg_MUX.vhd">

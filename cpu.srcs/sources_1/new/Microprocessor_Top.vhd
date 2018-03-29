@@ -68,7 +68,7 @@ c1: cpu port map (Inport0 => Inport0, Inport1 => Inport1, clk => clkout_1Hz, res
                     
 cd1: clk_divider port map (clkin => clk, reset => reset, clkout_1Hz => clkout_1Hz, clkout_500Hz => clkout_500Hz);
 
-M1: SevenSeg_Mux port map(clk => clkout_500Hz, reset => reset, LeftSeg => outport0, RightSeg => outport1, an => an, Seg_out => Seg_out);
+M1: SevenSeg_Mux port map(clk => clkout_500Hz, reset => reset, LeftSeg => outport1, RightSeg => outport0, an => an, Seg_out => Seg_out);
 
 
 end Behavioral;
