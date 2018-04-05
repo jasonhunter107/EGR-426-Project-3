@@ -5,8 +5,8 @@
   <File Type="VDS-TIMINGSUMMARY" Name="cpuram_timing_summary_synth.rpt"/>
   <File Type="VDS-TIMING-PB" Name="cpuram_timing_summary_synth.pb"/>
   <File Type="RDS-RDS" Name="cpuram.vds"/>
-  <File Type="PA-TCL" Name="cpuram.tcl"/>
   <File Type="RDS-PROPCONSTRS" Name="cpuram_drc_synth.rpt"/>
+  <File Type="PA-TCL" Name="cpuram.tcl"/>
   <File Type="RDS-UTIL" Name="cpuram_utilization_synth.rpt"/>
   <FileSet Name="sources" Type="BlockSrcs" RelSrcDir="$PSRCDIR/cpuram">
     <File Path="$PSRCDIR/sources_1/ip/cpuram/cpuram.xci">

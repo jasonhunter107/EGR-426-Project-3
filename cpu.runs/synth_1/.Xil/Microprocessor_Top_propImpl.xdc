@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:/home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/constrs_1/new/cpu_pins.xdc rfile:../../../cpu.srcs/constrs_1/new/cpu_pins.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:{C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/constrs_1/new/cpu_pins.xdc} rfile:../../../cpu.srcs/constrs_1/new/cpu_pins.xdc id:1} [current_design]
 set_property src_info {type:XDC file:1 line:7 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN W5 [get_ports clk]
 set_property src_info {type:XDC file:1 line:11 export:INPUT save:INPUT read:READ} [current_design]

@@ -21,6 +21,9 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -93,6 +96,11 @@ signal N,Z,V : STD_LOGIC;
 -- ---------- Declare the common data bus ------------------
 signal DATA : STD_LOGIC_VECTOR(7 downto 0);
 
+------------ Declare the debounce variables ------------------
+signal Debounce0, Debounce1 : STD_LOGIC_VECTOR(1 downto 0);
+signal DEBOUNCE_MAX : STD_LOGIC_VECTOR(1 downto 0) := "01";
+
+
 -- -----------------------------------------------------
 -- This function returns TRUE if the given op code is a
 -- 4-phase instruction rather than a 2-phase instruction
@@ -141,6 +149,7 @@ signal Exc_RegWrite : STD_LOGIC;        -- Latch data bus in A or B
 signal Exc_CCWrite : STD_LOGIC;         -- Latch ALU status bits in CCR
 signal Exc_IOWrite : STD_LOGIC;         -- Latch data bus in I/O
 signal Exc_BCDO : STD_LOGIC;
+signal Exc_DEB : STD_LOGIC;
 
 ----------------------------Temp Outport variables----------------------
 signal tempOut0, tempOut1 : STD_LOGIC_VECTOR (3 downto 0) := (others => '0');
@@ -244,6 +253,9 @@ begin
 							   Outport0 <= Decoder(tempOut0); --Call decoder function to decode the number to seven segment
 							   Outport1 <= Decoder(tempOut1);
 							   
+--							   elsif (Exc_DEB = '1') then
+--							   --Output result
+							   
 							   else
 							   Ledport0 <= DATA;
 							   end if;
@@ -252,6 +264,10 @@ begin
 							   Ledport1 <= DATA;
 							   Outport0 <= Decoder(tempOut0); --Call decoder function to decode the number to seven segment
 							   Outport1 <= Decoder(tempOut1);
+							   
+--							   	elsif (Exc_DEB = '1') then
+--                               --Output result
+                               
 							   else
 							   Ledport1 <= DATA;
 							   end if;
@@ -343,6 +359,28 @@ case CurrState is
                                end if;
                                Exc_IOWrite <= '1'; 
                                Exc_BCDO <= '1';      
+                               
+--                        when "0111000" =>          -- DEB 0, R, 
+--                               if(IR(0) = '0') then
+--                               tempOut0 <= "0000"; --Initialize to 0
+                                 -- Start counting
+--                               else
+--                               tempOut0 <= "0000"--Take lower 4 bits
+--                              -- Start counting
+--                               end if;
+--                               Exc_IOWrite <= '1'; 
+--                               Exc_DEB <= '1';
+
+--                        when "0111001" =>          --  DEB 1, R,  
+--                               if(IR(0) = '0') then
+--                               tempOut0 <= "0000"; --Initialize to 0
+                                 -- Start counting
+--                               else
+--                               tempOut0 <= "0000"--Take lower 4 bits
+--                              -- Start counting
+--                               end if;
+--                               Exc_IOWrite <= '1'; 
+--                               Exc_DEB <= '1';          
 						
 					      when "0000010"|"0000011" =>	       -- STOR R,M
 						        null;
@@ -351,6 +389,42 @@ case CurrState is
 				    end case;
 		end case;	
 end process;
+
+
+-------------------------Debounce timer 0-------------------------------------
+process(clk,reset)
+begin
+if (reset = '1') then
+    Debounce0 <= DEBOUNCE_MAX;
+elsif(rising_edge(clk)) then
+    if(Inport0(0) = '1') then
+    Debounce0 <= DEBOUNCE_MAX;
+    elsif (Debounce0 > 0) then
+        Debounce0 <= Debounce0 - 1;
+    else
+        Debounce0 <= "00";
+    end if;
+end if;
+
+end process;
+
+-------------------------Debounce timer 1-------------------------------------
+process(clk,reset)
+begin
+if (reset = '1') then
+    Debounce1 <= DEBOUNCE_MAX;
+elsif(rising_edge(clk)) then
+    if(Inport0(1) = '1') then
+    Debounce1 <= DEBOUNCE_MAX;
+    elsif (Debounce1 > 0) then
+        Debounce1 <= Debounce1 - 1;
+    else
+        Debounce1 <= "00";
+    end if;
+end if;
+
+end process;
+
 
 end a;
 
