@@ -23,6 +23,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
+--use IEEE.NUMERIC_STD.ALL;
 
 
 -- Uncomment the following library declaration if using
@@ -34,9 +35,6 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-LIBRARY IEEE;
-USE ieee.std_logic_1164.all;
-USE ieee.std_logic_arith.all;
 
 entity cpu is
 PORT(clk : in STD_LOGIC;
@@ -99,6 +97,7 @@ signal DATA : STD_LOGIC_VECTOR(7 downto 0);
 ------------ Declare the debounce variables ------------------
 signal Debounce0, Debounce1 : STD_LOGIC_VECTOR(1 downto 0);
 signal DEBOUNCE_MAX : STD_LOGIC_VECTOR(1 downto 0) := "01";
+signal tempBit : INTEGER;
 
 
 -- -----------------------------------------------------
@@ -142,6 +141,30 @@ begin
 return retval;
 
 end function;
+
+-- -----------------------------------------------------
+-- This function returns the decoded number of the register
+-- -----------------------------------------------------	
+--function ToInteger(constant num : STD_LOGIC_VECTOR (1 downto 0)) return INTEGER is
+
+--variable retval : INTEGER;
+--variable temp : INTEGER := IEEE.NUMERIC_STD.to_integer(unsigned(num));
+--begin
+--   case num is
+--    when "0000" => retval := 0; --0
+--    when "0001" => retval := 1; --1
+--    when "0011" => retval := 2; --2
+--    when "0011" => retval := 3; --3
+--    when "0100" => retval :=4; --4
+--    when "0101" => retval := 5; --5
+--    when "0110" => retval := 6; --6
+--    when "0111" => retval := 7; --7
+--    when others => retval := 0; -- '-'
+--    end case;
+
+--return retval;
+
+--end function;
 	
 -- --------- Declare variables that indicate which registers are to be written --------
 -- --------- from the DATA bus at the start of the next Fetch cycle. ------------------
@@ -149,10 +172,10 @@ signal Exc_RegWrite : STD_LOGIC;        -- Latch data bus in A or B
 signal Exc_CCWrite : STD_LOGIC;         -- Latch ALU status bits in CCR
 signal Exc_IOWrite : STD_LOGIC;         -- Latch data bus in I/O
 signal Exc_BCDO : STD_LOGIC;
-signal Exc_DEB : STD_LOGIC;
 
 ----------------------------Temp Outport variables----------------------
 signal tempOut0, tempOut1 : STD_LOGIC_VECTOR (3 downto 0) := (others => '0');
+
 
 	
 begin
@@ -248,31 +271,16 @@ begin
 
 					     if(Exc_IOWrite = '1') then    -- Write to Outport0 or OutPort1
 						    if(IR(1) = '0') then
-						      if (Exc_BCDO = '1') then
 							   Ledport0 <= DATA;
-							   Outport0 <= Decoder(tempOut0); --Call decoder function to decode the number to seven segment
-							   Outport1 <= Decoder(tempOut1);
-							   
---							   elsif (Exc_DEB = '1') then
---							   --Output result
-							   
-							   else
-							   Ledport0 <= DATA;
-							   end if;
 						    else
-						      if (Exc_BCDO = '1') then
-							   Ledport1 <= DATA;
-							   Outport0 <= Decoder(tempOut0); --Call decoder function to decode the number to seven segment
-							   Outport1 <= Decoder(tempOut1);
-							   
---							   	elsif (Exc_DEB = '1') then
---                               --Output result
-                               
-							   else
 							   Ledport1 <= DATA;
 							   end if;
 						    end if;
-					     end if;
+					     
+					  	if (Exc_BCDO = '1') then
+                          Outport0 <= Decoder(tempOut0); --Call decoder function to decode the number to seven segment
+                          Outport1 <= Decoder(tempOut1);
+                       end if;
 					
 			when Others => CurrState <= Fetch;
 		end case;
@@ -360,27 +368,37 @@ case CurrState is
                                Exc_IOWrite <= '1'; 
                                Exc_BCDO <= '1';      
                                
---                        when "0111000" =>          -- DEB 0, R, 
---                               if(IR(0) = '0') then
---                               tempOut0 <= "0000"; --Initialize to 0
-                                 -- Start counting
---                               else
---                               tempOut0 <= "0000"--Take lower 4 bits
---                              -- Start counting
---                               end if;
---                               Exc_IOWrite <= '1'; 
---                               Exc_DEB <= '1';
-
---                        when "0111001" =>          --  DEB 1, R,  
---                               if(IR(0) = '0') then
---                               tempOut0 <= "0000"; --Initialize to 0
-                                 -- Start counting
---                               else
---                               tempOut0 <= "0000"--Take lower 4 bits
---                              -- Start counting
---                               end if;
---                               Exc_IOWrite <= '1'; 
---                               Exc_DEB <= '1';          
+                        when "0111000" | "0111001" =>          -- DEB 0, R, ; DEB 1, R,  
+                        if(IR(1) = '0') then
+                                 
+                            if(Debounce0 = "00") then
+                              DATA <= X"01";
+                              else
+                              DATA <= X"00";
+                              end if;
+                        else
+                            if(Debounce1 = "00") then
+                            DATA <= X"01";
+                            else
+                            DATA <= X"00";
+                            end if;
+                        end if;
+                        Exc_RegWrite <= '1'; --For me, has to be something else
+                        
+--                       when "0001000" =>          -- CLRB M, B
+--                       DATA <= RAM_DATA_OUT;
+                       
+--                       --tempBit <= IEEE.NUMERIC_STD.to_integer(unsigned(IR(1 downto 0)));          --Bit number
+--                       tempBit <= 0;
+--                          if (tempBit = 7) then
+--                          DATA <= '0' & DATA(6 downto 0);
+--                          elsif(tempBit = 0) then
+--                          Data <= Data(7 downto 1) & '0';
+--                          else
+--                          DATA <= ( DATA(7 downto (tempBit+1) ) & '0' ) & DATA( (tempBit-1) downto 0); 
+--                          end if;
+--                        Exc_RegWrite <= '1'; --For me, has to be something else
+     
 						
 					      when "0000010"|"0000011" =>	       -- STOR R,M
 						        null;

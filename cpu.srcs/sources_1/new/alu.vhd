@@ -31,8 +31,6 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-LIBRARY IEEE;
-USE ieee.std_logic_1164.all;
 USE ieee.std_logic_arith.all;
 
 entity alu is
