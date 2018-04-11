@@ -143,28 +143,21 @@ return retval;
 end function;
 
 -- -----------------------------------------------------
--- This function returns the decoded number of the register
+-- This function returns TRUE if the given op code is a
+-- 5-phase instruction rather than a 2-phase instruction
 -- -----------------------------------------------------	
---function ToInteger(constant num : STD_LOGIC_VECTOR (1 downto 0)) return INTEGER is
-
---variable retval : INTEGER;
---variable temp : INTEGER := IEEE.NUMERIC_STD.to_integer(unsigned(num));
---begin
---   case num is
---    when "0000" => retval := 0; --0
---    when "0001" => retval := 1; --1
---    when "0011" => retval := 2; --2
---    when "0011" => retval := 3; --3
---    when "0100" => retval :=4; --4
---    when "0101" => retval := 5; --5
---    when "0110" => retval := 6; --6
---    when "0111" => retval := 7; --7
---    when others => retval := 0; -- '-'
---    end case;
-
---return retval;
-
---end function;
+function Is5Phase(constant DATA : STD_LOGIC_VECTOR(7 downto 0)) return BOOLEAN is
+variable MSB5 : STD_LOGIC_VECTOR(4 downto 0);
+variable RETVAL : BOOLEAN;
+begin
+  MSB5 := DATA(7 downto 3);
+  if(MSB5 = "00010") then
+	 RETVAL := true;
+  else
+	 RETVAL := false;
+  end if;
+ return RETVAL;
+end function;
 	
 -- --------- Declare variables that indicate which registers are to be written --------
 -- --------- from the DATA bus at the start of the next Fetch cycle. ------------------
