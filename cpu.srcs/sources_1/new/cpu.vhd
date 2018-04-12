@@ -76,13 +76,17 @@ end component;
 --		WE	: in STD_LOGIC 
 --	 );
 --end component;
+
+-- -----------------------------------------------------
+-- SIGNAL DECLARATIONS
+-- -----------------------------------------------------
 -- ---------- Declare signals interfacing to RAM ---------------
 signal RAM_DATA_OUT : STD_LOGIC_VECTOR(7 downto 0);  -- DATAOUT output of RAM
 signal ADDR : STD_LOGIC_VECTOR(8 downto 0);	         -- ADDRESS input of RAM
 signal RAM_WE : STD_LOGIC;
 
 -- ---------- Declare the state names and state variable -------------
-type STATE_TYPE is (Fetch, Operand, Memory, Execute);
+type STATE_TYPE is (Fetch, Operand, Memory, Execute, WriteBack);
 signal CurrState : STATE_TYPE;
 -- ---------- Declare the internal CPU registers -------------------
 signal PC : UNSIGNED(8 downto 0);
@@ -99,6 +103,22 @@ signal Debounce0, Debounce1 : STD_LOGIC_VECTOR(1 downto 0);
 signal DEBOUNCE_MAX : STD_LOGIC_VECTOR(1 downto 0) := "01";
 signal tempBit : INTEGER;
 
+-- --------- Declare variables that indicate which registers are to be written --------
+-- --------- from the DATA bus at the start of the next Fetch cycle. ------------------
+signal Exc_RegWrite : STD_LOGIC;        -- Latch data bus in A or B
+signal Exc_CCWrite : STD_LOGIC;         -- Latch ALU status bits in CCR
+signal Exc_IOWrite : STD_LOGIC;         -- Latch data bus in I/O
+signal Exc_BCDO : STD_LOGIC;
+signal Exc_Writeback : STD_LOGIC;
+
+----------------------------Temp Outport variables----------------------
+signal tempOut0, tempOut1 : STD_LOGIC_VECTOR (3 downto 0) := (others => '0');
+signal tempBitNum : STD_LOGIC_VECTOR(2 downto 0);
+signal fivePhaseFlag : STD_LOGIC;
+-- -----------------------------------------------------
+-- END SIGNAL DECLARATIONS
+-- -----------------------------------------------------
+
 
 -- -----------------------------------------------------
 -- This function returns TRUE if the given op code is a
@@ -110,6 +130,23 @@ variable RETVAL : BOOLEAN;
 begin
   MSB5 := DATA(7 downto 3);
   if(MSB5 = "00000") then
+	 RETVAL := true;
+  else
+	 RETVAL := false;
+  end if;
+ return RETVAL;
+end function;
+
+-- -----------------------------------------------------
+-- This function returns TRUE if the given op code is a
+-- 5-phase instruction rather than a 2-phase instruction
+-- -----------------------------------------------------	
+function Is5Phase(constant DATA : STD_LOGIC_VECTOR(7 downto 0)) return BOOLEAN is
+variable MSB4 : STD_LOGIC_VECTOR(3 downto 0);
+variable RETVAL : BOOLEAN;
+begin
+  MSB4 := DATA(7 downto 4);
+  if(MSB4 = "0001") then
 	 RETVAL := true;
   else
 	 RETVAL := false;
@@ -143,31 +180,27 @@ return retval;
 end function;
 
 -- -----------------------------------------------------
--- This function returns TRUE if the given op code is a
--- 5-phase instruction rather than a 2-phase instruction
+-- This function returns the decoded number of the register
 -- -----------------------------------------------------	
-function Is5Phase(constant DATA : STD_LOGIC_VECTOR(7 downto 0)) return BOOLEAN is
-variable MSB5 : STD_LOGIC_VECTOR(4 downto 0);
-variable RETVAL : BOOLEAN;
-begin
-  MSB5 := DATA(7 downto 3);
-  if(MSB5 = "00010") then
-	 RETVAL := true;
-  else
-	 RETVAL := false;
-  end if;
- return RETVAL;
-end function;
-	
--- --------- Declare variables that indicate which registers are to be written --------
--- --------- from the DATA bus at the start of the next Fetch cycle. ------------------
-signal Exc_RegWrite : STD_LOGIC;        -- Latch data bus in A or B
-signal Exc_CCWrite : STD_LOGIC;         -- Latch ALU status bits in CCR
-signal Exc_IOWrite : STD_LOGIC;         -- Latch data bus in I/O
-signal Exc_BCDO : STD_LOGIC;
+function DecoderBit(constant num : STD_LOGIC_VECTOR(2 downto 0)) return INTEGER is
 
-----------------------------Temp Outport variables----------------------
-signal tempOut0, tempOut1 : STD_LOGIC_VECTOR (3 downto 0) := (others => '0');
+variable retval : INTEGER;
+begin
+   case num is
+    when "000" => retval := 0; --0
+    when "001" => retval := 1; --1
+    when "010" => retval := 2; --2
+    when "011" => retval := 3; --3
+    when "100" => retval := 4; --4
+    when "101" => retval := 5; --5
+    when "110" => retval := 6; --6
+    when "0110" => retval := 7; --7
+    when others => retval := 0; -- 0
+    end case;
+
+return retval;
+
+end function;
 
 
 	
@@ -201,6 +234,7 @@ with CurrState select
 			 STD_LOGIC_VECTOR(PC) when Operand,  -- really a don't care
 			 IR(1) & MDR when Memory,
 			 STD_LOGIC_VECTOR(PC) when Execute,
+			 '0' & MDR when WriteBack,
 			 STD_LOGIC_VECTOR(PC) when others;   -- just to be safe
 				
 -- --------------------------------------------------------------------
@@ -226,27 +260,42 @@ begin
 	 temp := 0;
   elsif(rising_edge(clk)) then
 	 case CurrState is
+------------------- Fetch/Operand --------------------------
 		  when Fetch => IR <= DATA;
 					    if(Is4Phase(DATA)) then
 						   PC <= PC + 1;
 						   temp := temp + 1;
 						   CurrState <= Operand;
+						   
+						elsif (Is5Phase(DATA)) then
+						PC <= PC + 1;
+                        temp := temp + 1;
+                        fivePhaseFlag <= '1';
+                        CurrState <= Operand;
+                        
 					    else
 						   CurrState <= Execute;
 					    end if;
-
+------------------- Operand --------------------------
 		 when Operand => MDR <= DATA;
 					     CurrState <= Memory;
 
+------------------- Memory --------------------------
 		 when Memory => CurrState <= Execute;
-					
+	
+------------------- Execute --------------------------				
 		 when Execute => if(temp = 2) then 
 		                    PC <= "000000010";
 					     else
 					        PC <= PC + 1;
 					        temp := temp +1;
 					     end if;
+					     
+					     if(fivePhaseFlag = '1') then
+					     CurrState <= WriteBack;
+					     else
 					     CurrState <= Fetch;
+					     end if;
 					
 					     if(Exc_RegWrite = '1') then   -- Writing result to A or B
 						    if(IR(0) = '0') then
@@ -274,13 +323,25 @@ begin
                           Outport0 <= Decoder(tempOut0); --Call decoder function to decode the number to seven segment
                           Outport1 <= Decoder(tempOut1);
                        end if;
-					
+                       
+------------------- WriteBack --------------------------
+    when WriteBack =>
+    
+     if(Exc_Writeback = '1') then    -- Updating flag bits
+    --Write back to address
+    end if;
+     CurrState <= Fetch;                       
+     
 			when Others => CurrState <= Fetch;
+			
+
 		end case;
 	end if;
 end process;
 
-	
+-- --------------------------------------------------------------------
+-- Combinational logic for FSM
+-- --------------------------------------------------------------------	
 process (CurrState,RAM_DATA_OUT,A,B,ALU_OUT,Inport0,Inport1,IR) 
 begin
 -- Set these to 0 in each phase unless overridden, just so we don't
@@ -289,6 +350,7 @@ Exc_RegWrite <= '0';
 Exc_CCWrite <= '0';
 Exc_IOWrite <= '0';
 Exc_BCDO <= '0';
+Exc_Writeback <= '0';
 
 -- Same idea
 ALU_A <= A;
@@ -298,15 +360,19 @@ ALU_B <= B;
 DATA <= RAM_DATA_OUT;
 
 case CurrState is
+------------------- Fetch/Operand --------------------------
 	 when Fetch | Operand => DATA <= RAM_DATA_OUT;
-						
+
+------------------- Memory --------------------------						
 	 when Memory => if(IR(0) = '0') then
 					   DATA <= STD_LOGIC_VECTOR(A);
 				    else
 					   DATA <= STD_LOGIC_VECTOR(B);
 				    end if;
-				
-	 when Execute => case IR(7 downto 1) is
+
+------------------- Execute --------------------------				
+	 when Execute => 
+	                   case IR(7 downto 1) is
 					      when "1000000" 			-- ADD R
 						     | "1001000"			-- SUB R
 						     | "1100000"			-- XOR R
@@ -376,28 +442,35 @@ case CurrState is
                             DATA <= X"00";
                             end if;
                         end if;
-                        Exc_RegWrite <= '1'; --For me, has to be something else
-                        
---                       when "0001000" =>          -- CLRB M, B
---                       DATA <= RAM_DATA_OUT;
-                       
---                       --tempBit <= IEEE.NUMERIC_STD.to_integer(unsigned(IR(1 downto 0)));          --Bit number
---                       tempBit <= 0;
---                          if (tempBit = 7) then
---                          DATA <= '0' & DATA(6 downto 0);
---                          elsif(tempBit = 0) then
---                          Data <= Data(7 downto 1) & '0';
---                          else
---                          DATA <= ( DATA(7 downto (tempBit+1) ) & '0' ) & DATA( (tempBit-1) downto 0); 
---                          end if;
---                        Exc_RegWrite <= '1'; --For me, has to be something else
-     
+                        Exc_RegWrite <= '1'; --For me, has to be something else 
 						
 					      when "0000010"|"0000011" =>	       -- STOR R,M
 						        null;
 								
 					      when others => null;
 				    end case;
+				    ------------------- CLRB M B instruction case --------------------------
+				               case IR(7 downto 3) is
+                                when "00010" =>	  
+                                --Recieving DATA from RAM
+                                 DATA <= RAM_DATA_OUT; 
+                                 --Last 3 bits of instruction was the bit number to change
+                                 tempBitNum <= IR(2 downto 0);
+                                 --Converting the 3 bits to an integer
+                                tempBit <= DecoderBit(tempBitNum);          --Bit number  
+                                
+                             --Changing particular bit number of DATA
+                             if (tempBit = 7) then
+                                 DATA <= '0' & DATA(6 downto 0);
+                             elsif(tempBit = 0) then
+                                DATA <= DATA(7 downto 1) & '0';
+                             else
+                                DATA <= ( DATA(7 downto (tempBit+1) ) & '0' ) & DATA( (tempBit-1) downto 0); 
+                            end if;                                 
+                        Exc_WriteBack <= '1'; --After changing value, set WriteBack to true
+                       
+                                when others => null;     
+                               end case;
 		end case;	
 end process;
 
