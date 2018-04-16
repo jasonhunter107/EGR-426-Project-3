@@ -3,6 +3,8 @@
 # 
 
 set_param xicom.use_bs_reader 1
+set_msg_config -id {Synth 8-256} -limit 10000
+set_msg_config -id {Synth 8-638} -limit 10000
 create_project -in_memory -part xc7a35tcpg236-1
 
 set_param project.singleFileAddWarning.threshold 0
@@ -18,6 +20,7 @@ set_property ip_output_repo {c:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Pro
 set_property ip_cache_permissions {read write} [current_project]
 add_files {{C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/testfile.coe}}
 read_vhdl -library xil_defaultlib {
+  {C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/PWM.vhd}
   {C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/SevenSeg_MUX.vhd}
   {C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/alu.vhd}
   {C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/clk_divider.vhd}

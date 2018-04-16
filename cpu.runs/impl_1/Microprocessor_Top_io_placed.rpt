@@ -1,7 +1,7 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------
 | Tool Version              : Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
-| Date                      : Mon Apr  9 23:57:58 2018
+| Date                      : Mon Apr 16 02:11:51 2018
 | Host                      : 25thBam running 64-bit major release  (build 9200)
 | Command                   : report_io -file Microprocessor_Top_io_placed.rpt
 | Design                    : Microprocessor_Top
@@ -159,7 +159,7 @@ Table of Contents
 | K17        |             | High Range | IO_L12N_T1_MRCC_14           | User IO       |             |      14 |            |      |                     |                      |         |            |           |          |      |                  |
 | K18        |             | High Range | IO_L8N_T1_D12_14             | User IO       |             |      14 |            |      |                     |                      |         |            |           |          |      |                  |
 | K19        |             | High Range | IO_L6P_T0_FCS_B_14           | User IO       |             |      14 |            |      |                     |                      |         |            |           |          |      |                  |
-| L1         | Ledport1[7] | High Range | IO_L6N_T0_VREF_35            | OUTPUT        | LVCMOS33    |      35 |         12 | SLOW |                     |            FP_VTT_50 |         | FIXED      |           |          |      | NONE             |
+| L1         | Ledport15   | High Range | IO_L6N_T0_VREF_35            | OUTPUT        | LVCMOS33    |      35 |         12 | SLOW |                     |            FP_VTT_50 |         | FIXED      |           |          |      | NONE             |
 | L2         |             | High Range | IO_L5N_T0_AD13N_35           | User IO       |             |      35 |            |      |                     |                      |         |            |           |          |      |                  |
 | L3         |             | High Range | IO_L8P_T1_AD14P_35           | User IO       |             |      35 |            |      |                     |                      |         |            |           |          |      |                  |
 | L7         |             | High Range | VCCO_35                      | VCCO          |             |      35 |            |      |                     |                      |    3.30 |            |           |          |      |                  |

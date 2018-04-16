@@ -41,7 +41,9 @@ PORT(clk : in STD_LOGIC;
 	 reset : in STD_LOGIC;
 	 Inport0, Inport1 : in STD_LOGIC_VECTOR(7 downto 0);
 	 Ledport0, Ledport1	: out STD_LOGIC_VECTOR(7 downto 0);
-	 Outport0, Outport1 : out STD_LOGIC_VECTOR (6 downto 0));
+	 Outport0, Outport1 : out STD_LOGIC_VECTOR (6 downto 0);
+	 PWMout : out STD_LOGIC_VECTOR(7 downto 0)
+	 );
 end cpu;
 
 architecture a of cpu is
@@ -109,12 +111,14 @@ signal Exc_RegWrite : STD_LOGIC;        -- Latch data bus in A or B
 signal Exc_CCWrite : STD_LOGIC;         -- Latch ALU status bits in CCR
 signal Exc_IOWrite : STD_LOGIC;         -- Latch data bus in I/O
 signal Exc_BCDO : STD_LOGIC;
-signal Exc_Writeback : STD_LOGIC;
+signal Exc_PWM : STD_LOGIC;
 
 ----------------------------Temp Outport variables----------------------
 signal tempOut0, tempOut1 : STD_LOGIC_VECTOR (3 downto 0) := (others => '0');
 signal tempBitNum : STD_LOGIC_VECTOR(2 downto 0);
+signal tempWriteBack : STD_LOGIC_VECTOR(7 downto 0);
 signal fivePhaseFlag : STD_LOGIC;
+signal tempPWM : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
 -- -----------------------------------------------------
 -- END SIGNAL DECLARATIONS
 -- -----------------------------------------------------
@@ -142,11 +146,11 @@ end function;
 -- 5-phase instruction rather than a 2-phase instruction
 -- -----------------------------------------------------	
 function Is5Phase(constant DATA : STD_LOGIC_VECTOR(7 downto 0)) return BOOLEAN is
-variable MSB4 : STD_LOGIC_VECTOR(3 downto 0);
+variable MSB4 : STD_LOGIC_VECTOR(2 downto 0);
 variable RETVAL : BOOLEAN;
 begin
-  MSB4 := DATA(7 downto 4);
-  if(MSB4 = "0001") then
+  MSB4 := DATA(7 downto 5);
+  if(MSB4 = "001") then
 	 RETVAL := true;
   else
 	 RETVAL := false;
@@ -194,7 +198,7 @@ begin
     when "100" => retval := 4; --4
     when "101" => retval := 5; --5
     when "110" => retval := 6; --6
-    when "0110" => retval := 7; --7
+    when "111" => retval := 7; --7
     when others => retval := 0; -- 0
     end case;
 
@@ -221,7 +225,7 @@ U2 : microram PORT MAP (CLOCK => clk, ADDRESS => ADDR, DATAOUT => RAM_DATA_OUT, 
 -- hence this is when we need to set RAM_WE high.
 process (CurrState,IR)
 begin
-  if((CurrState = Memory) and (IR(7 downto 2) = "000001")) then
+  if( ((CurrState = Memory) and (IR(7 downto 2) = "000001")) or ( (CurrState = WriteBack) and (IR(7 downto 5) = "001")) ) then
 	  RAM_WE <= '1';
   else
 	  RAM_WE <= '0';
@@ -236,6 +240,34 @@ with CurrState select
 			 STD_LOGIC_VECTOR(PC) when Execute,
 			 '0' & MDR when WriteBack,
 			 STD_LOGIC_VECTOR(PC) when others;   -- just to be safe
+
+--process (CurrState)
+--begin
+
+--if (CurrState = Fetch) then
+--    ADDR <= STD_LOGIC_VECTOR(PC);
+--elsif (CurrState = Operand) then
+--    ADDR <= STD_LOGIC_VECTOR(PC);
+    
+--elsif (CurrState = Memory) then
+--    ADDR <= IR(1) & MDR;
+    
+--elsif (CurrState = Execute) then
+--    if(fivePhaseFlag = '0') then
+--    ADDR <= STD_LOGIC_VECTOR(PC);    
+--    else
+--    ADDR <= IR(1) & MDR;
+--    end if;    
+    
+--elsif (CurrState = WriteBack) then
+--    ADDR <= STD_LOGIC_VECTOR(PC);   
+
+--else
+--    ADDR <= STD_LOGIC_VECTOR(PC);            
+
+--end if;
+
+--end process;
 				
 -- --------------------------------------------------------------------
 -- This is the next-state logic for the 4-phase state machine.
@@ -257,7 +289,9 @@ begin
 	 Ledport1 <= (others => '0');
 	 Outport0 <= "1111110";
      Outport1 <= "1111110";
+     PWMout <= (others => '0');
 	 temp := 0;
+	 fivePhaseFlag <= '0';
   elsif(rising_edge(clk)) then
 	 case CurrState is
 ------------------- Fetch/Operand --------------------------
@@ -265,6 +299,7 @@ begin
 					    if(Is4Phase(DATA)) then
 						   PC <= PC + 1;
 						   temp := temp + 1;
+						   fivePhaseFlag <= '0';
 						   CurrState <= Operand;
 						   
 						elsif (Is5Phase(DATA)) then
@@ -274,6 +309,7 @@ begin
                         CurrState <= Operand;
                         
 					    else
+					       fivePhaseFlag <= '0';
 						   CurrState <= Execute;
 					    end if;
 ------------------- Operand --------------------------
@@ -286,11 +322,14 @@ begin
 ------------------- Execute --------------------------				
 		 when Execute => if(temp = 2) then 
 		                    PC <= "000000010";
-					     else
+					    elsif(fivePhaseFlag = '0') then --If its a 4 phase
 					        PC <= PC + 1;
 					        temp := temp +1;
+					    else --Make sure PC does not change if it is going to WriteBack state
+					    PC <= PC;
 					     end if;
 					     
+					     --Check if instruction needs to go to WriteBack phase
 					     if(fivePhaseFlag = '1') then
 					     CurrState <= WriteBack;
 					     else
@@ -322,14 +361,27 @@ begin
 					  	if (Exc_BCDO = '1') then
                           Outport0 <= Decoder(tempOut0); --Call decoder function to decode the number to seven segment
                           Outport1 <= Decoder(tempOut1);
-                       end if;
+                          end if;
+                          
+                        if(Exc_PWM = '1') then
+                                                   
+                        PWMout <= DATA;
+                        end if;
                        
 ------------------- WriteBack --------------------------
     when WriteBack =>
-    
-     if(Exc_Writeback = '1') then    -- Updating flag bits
-    --Write back to address
+ 
+    if(DATA = X"00") then
+    Z <= '1';
+    elsif ( DATA(7) = '1') then
+    N <= '1';
+    else
+    Z <= '0';
+    N <= '0';
     end if;
+ 
+   --Increment counter
+    PC <= PC + 1;
      CurrState <= Fetch;                       
      
 			when Others => CurrState <= Fetch;
@@ -350,7 +402,7 @@ Exc_RegWrite <= '0';
 Exc_CCWrite <= '0';
 Exc_IOWrite <= '0';
 Exc_BCDO <= '0';
-Exc_Writeback <= '0';
+Exc_PWM <= '0';
 
 -- Same idea
 ALU_A <= A;
@@ -432,45 +484,76 @@ case CurrState is
                                  
                             if(Debounce0 = "00") then
                               DATA <= X"01";
+                              tempOut0 <= DATA(3 downto 0);
                               else
                               DATA <= X"00";
+                              tempOut0 <= DATA(3 downto 0);
                               end if;
                         else
                             if(Debounce1 = "00") then
                             DATA <= X"01";
+                            tempOut0 <= DATA(3 downto 0);
                             else
                             DATA <= X"00";
+                            tempOut0 <= DATA(3 downto 0);
                             end if;
                         end if;
-                        Exc_RegWrite <= '1'; --For me, has to be something else 
+                        Exc_BCDO <= '1'; --Output result to DATA
+                        
+                        when "0111010" =>          -- PWM R
+                          if(IR(0) = '0') then
+                          DATA <= STD_LOGIC_VECTOR(A);
+                          else
+                          DATA <= STD_LOGIC_VECTOR(B);
+                         end if;
+                          Exc_PWM <= '1'; 
+                          
+            ------------------- CLRB M B instruction case --------------------------
+                      when "0010000" |
+                           "0010010" |
+                           "0010100" |
+                           "0010110" |
+                           "0011000" |
+                           "0011010" |
+                           "0011100" |
+                           "0011110" =>
+                            --Recieving DATA from RAM
+                            --DATA <= RAM_DATA_OUT; 
+                            
+                            --Last 3 bits of instruction was the bit number to change
+                           tempBitNum <= IR(4 downto 2);
+                           --Converting the 3 bits to an integer
+                           tempBit <= DecoderBit(tempBitNum);          --Bit number  
+                           
+                        --Changing particular bit number of DATA
+                        if (tempBit = 7) then
+                            DATA <= '0' & RAM_DATA_OUT(6 downto 0);
+                        elsif(tempBit = 0) then
+                           DATA <= RAM_DATA_OUT(7 downto 1) & '0';
+                        else
+                        
+                        case tempBit is
+                        when 1 => DATA <= ( RAM_DATA_OUT(7 downto 2) & '0' ) & RAM_DATA_OUT(0);
+                        when 2 => DATA <= ( RAM_DATA_OUT(7 downto 3) & '0' ) & RAM_DATA_OUT(1 downto 0);
+                        when 3 => DATA <= ( RAM_DATA_OUT(7 downto 4) & '0' ) & RAM_DATA_OUT(2 downto 0);
+                        when 4 => DATA <= ( RAM_DATA_OUT(7 downto 5) & '0' ) & RAM_DATA_OUT(3 downto 0);
+                        when 5 => DATA <= ( RAM_DATA_OUT(7 downto 6) & '0' ) & RAM_DATA_OUT(4 downto 0);
+                        when 6 => DATA <= ( RAM_DATA_OUT(7) & '0' ) & RAM_DATA_OUT(5 downto 0);
+                        when others => DATA <= X"00";                             
+                        --DATA <= DATA & ~(1 << tempBit) Other way of clearing bit
+                        end case;
+                        
+                       end if;  
 						
 					      when "0000010"|"0000011" =>	       -- STOR R,M
 						        null;
 								
 					      when others => null;
 				    end case;
-				    ------------------- CLRB M B instruction case --------------------------
-				               case IR(7 downto 3) is
-                                when "00010" =>	  
-                                --Recieving DATA from RAM
-                                 DATA <= RAM_DATA_OUT; 
-                                 --Last 3 bits of instruction was the bit number to change
-                                 tempBitNum <= IR(2 downto 0);
-                                 --Converting the 3 bits to an integer
-                                tempBit <= DecoderBit(tempBitNum);          --Bit number  
-                                
-                             --Changing particular bit number of DATA
-                             if (tempBit = 7) then
-                                 DATA <= '0' & DATA(6 downto 0);
-                             elsif(tempBit = 0) then
-                                DATA <= DATA(7 downto 1) & '0';
-                             else
-                                DATA <= ( DATA(7 downto (tempBit+1) ) & '0' ) & DATA( (tempBit-1) downto 0); 
-                            end if;                                 
-                        Exc_WriteBack <= '1'; --After changing value, set WriteBack to true
-                       
-                                when others => null;     
-                               end case;
+                               
+ ------------------- WriteBack --------------------------	                              
+     when WriteBack => DATA <= DATA;
+     
 		end case;	
 end process;
 

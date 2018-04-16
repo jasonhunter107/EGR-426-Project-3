@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2017.2 (lin64) Build 1909853 Thu Jun 15 18:39:10 MDT 2017
-// Date        : Thu Mar 29 18:55:32 2018
-// Host        : jason-Latitude-E6220 running 64-bit Ubuntu 17.10
-// Command     : write_verilog -force -mode funcsim
-//               /home/jason/Documents/EGR426/EGR-426-Project-3/cpu.srcs/sources_1/ip/cpuram/cpuram_sim_netlist.v
+// Tool Version: Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
+// Date        : Mon Apr 16 01:54:03 2018
+// Host        : 25thBam running 64-bit major release  (build 9200)
+// Command     : write_verilog -force -mode funcsim -rename_top cpuram -prefix
+//               cpuram_ cpuram_sim_netlist.v
 // Design      : cpuram
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -192,7 +192,6 @@ module cpuram
         .web(1'b0));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_generic_cstr" *) 
 module cpuram_blk_mem_gen_generic_cstr
    (douta,
     clka,
@@ -219,7 +218,6 @@ module cpuram_blk_mem_gen_generic_cstr
         .wea(wea));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
 module cpuram_blk_mem_gen_prim_width
    (douta,
     clka,
@@ -246,7 +244,6 @@ module cpuram_blk_mem_gen_prim_width
         .wea(wea));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper_init" *) 
 module cpuram_blk_mem_gen_prim_wrapper_init
    (douta,
     clka,
@@ -305,8 +302,8 @@ module cpuram_blk_mem_gen_prim_wrapper_init
     .INITP_05(256'h0000000000000000000000000000000000000000000000000000000000000000),
     .INITP_06(256'h0000000000000000000000000000000000000000000000000000000000000000),
     .INITP_07(256'h0000000000000000000000000000000000000000000000000000000000000000),
-    .INIT_00(256'h0101000000000200020200000101000000000200000003010000000003030000),
-    .INIT_01(256'h0000000000000200000000010101000000000200020000000000030200000001),
+    .INIT_00(256'h0000000000000200010100000103000000000200000001020000000003030000),
+    .INIT_01(256'h0000000000000000000000000000000000000000000000000000000000000000),
     .INIT_02(256'h0000000000000000000000000000000000000000000000000000000000000000),
     .INIT_03(256'h0000000000000000000000000000000000000000000000000000000000000000),
     .INIT_04(256'h0000000000000000000000000000000000000000000000000000000000000000),
@@ -419,7 +416,6 @@ module cpuram_blk_mem_gen_prim_wrapper_init
         .WEBWE({1'b0,1'b0,wea,wea}));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_top" *) 
 module cpuram_blk_mem_gen_top
    (douta,
     clka,
@@ -470,7 +466,7 @@ endmodule
 (* C_USE_URAM = "0" *) (* C_WEA_WIDTH = "1" *) (* C_WEB_WIDTH = "1" *) 
 (* C_WRITE_DEPTH_A = "512" *) (* C_WRITE_DEPTH_B = "512" *) (* C_WRITE_MODE_A = "WRITE_FIRST" *) 
 (* C_WRITE_MODE_B = "WRITE_FIRST" *) (* C_WRITE_WIDTH_A = "8" *) (* C_WRITE_WIDTH_B = "8" *) 
-(* C_XDEVICEFAMILY = "artix7" *) (* ORIG_REF_NAME = "blk_mem_gen_v8_3_6" *) (* downgradeipidentifiedwarnings = "yes" *) 
+(* C_XDEVICEFAMILY = "artix7" *) (* downgradeipidentifiedwarnings = "yes" *) 
 module cpuram_blk_mem_gen_v8_3_6
    (clka,
     rsta,
@@ -674,7 +670,6 @@ module cpuram_blk_mem_gen_v8_3_6
         .wea(wea));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_3_6_synth" *) 
 module cpuram_blk_mem_gen_v8_3_6_synth
    (douta,
     clka,

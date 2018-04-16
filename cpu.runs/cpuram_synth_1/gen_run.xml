@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="cpuram_synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1522364052">
-  <File Type="RDS-DCP" Name="cpuram.dcp"/>
+<GenRun Id="cpuram_synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1523859027">
+  <File Type="RDS-PROPCONSTRS" Name="cpuram_drc_synth.rpt"/>
+  <File Type="PA-TCL" Name="cpuram.tcl"/>
+  <File Type="RDS-RDS" Name="cpuram.vds"/>
+  <File Type="RDS-UTIL" Name="cpuram_utilization_synth.rpt"/>
   <File Type="RDS-UTIL-PB" Name="cpuram_utilization_synth.pb"/>
+  <File Type="RDS-DCP" Name="cpuram.dcp"/>
   <File Type="VDS-TIMINGSUMMARY" Name="cpuram_timing_summary_synth.rpt"/>
   <File Type="VDS-TIMING-PB" Name="cpuram_timing_summary_synth.pb"/>
-  <File Type="RDS-RDS" Name="cpuram.vds"/>
-  <File Type="PA-TCL" Name="cpuram.tcl"/>
-  <File Type="RDS-PROPCONSTRS" Name="cpuram_drc_synth.rpt"/>
-  <File Type="RDS-UTIL" Name="cpuram_utilization_synth.rpt"/>
   <FileSet Name="sources" Type="BlockSrcs" RelSrcDir="$PSRCDIR/cpuram">
     <File Path="$PSRCDIR/sources_1/ip/cpuram/cpuram.xci">
       <FileInfo>
@@ -35,7 +35,9 @@
     </Config>
   </FileSet>
   <Strategy Version="1" Minor="2">
-    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2017"/>
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2017">
+      <Desc>Vivado Synthesis Defaults</Desc>
+    </StratHandle>
     <Step Id="synth_design"/>
   </Strategy>
 </GenRun>
