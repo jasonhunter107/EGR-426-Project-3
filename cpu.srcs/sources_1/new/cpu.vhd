@@ -61,16 +61,7 @@ signal ALU_OUT : SIGNED(7 downto 0);
 signal ALU_N, ALU_V, ALU_Z : STD_LOGIC;
 
 -- ------------ Declare the 512x8 RAM component --------------
-component microram is
-port (  CLOCK   : in STD_LOGIC ;
-		ADDRESS	: in STD_LOGIC_VECTOR (8 downto 0);
-		DATAOUT : out STD_LOGIC_VECTOR (7 downto 0);
-		DATAIN  : in STD_LOGIC_VECTOR (7 downto 0);
-		WE	: in STD_LOGIC 
-	 );
-end component;
-
---component microram_sim is
+--component microram is
 --port (  CLOCK   : in STD_LOGIC ;
 --		ADDRESS	: in STD_LOGIC_VECTOR (8 downto 0);
 --		DATAOUT : out STD_LOGIC_VECTOR (7 downto 0);
@@ -78,6 +69,15 @@ end component;
 --		WE	: in STD_LOGIC 
 --	 );
 --end component;
+
+component microram_sim is
+port (  CLOCK   : in STD_LOGIC ;
+		ADDRESS	: in STD_LOGIC_VECTOR (8 downto 0);
+		DATAOUT : out STD_LOGIC_VECTOR (7 downto 0);
+		DATAIN  : in STD_LOGIC_VECTOR (7 downto 0);
+		WE	: in STD_LOGIC 
+	 );
+end component;
 
 -- -----------------------------------------------------
 -- SIGNAL DECLARATIONS
@@ -88,7 +88,7 @@ signal ADDR : STD_LOGIC_VECTOR(8 downto 0);	         -- ADDRESS input of RAM
 signal RAM_WE : STD_LOGIC;
 
 -- ---------- Declare the state names and state variable -------------
-type STATE_TYPE is (Fetch, Operand, Memory, Execute, WriteBack);
+type STATE_TYPE is (Fetch, Operand, Memory, Load, Execute, WriteBack);
 signal CurrState : STATE_TYPE;
 -- ---------- Declare the internal CPU registers -------------------
 signal PC : UNSIGNED(8 downto 0);
@@ -112,13 +112,14 @@ signal Exc_CCWrite : STD_LOGIC;         -- Latch ALU status bits in CCR
 signal Exc_IOWrite : STD_LOGIC;         -- Latch data bus in I/O
 signal Exc_BCDO : STD_LOGIC;
 signal Exc_PWM : STD_LOGIC;
+signal Exc_CLRB : STD_LOGIC;
 
 ----------------------------Temp Outport variables----------------------
 signal tempOut0, tempOut1 : STD_LOGIC_VECTOR (3 downto 0) := (others => '0');
 signal tempBitNum : STD_LOGIC_VECTOR(2 downto 0);
-signal tempWriteBack : STD_LOGIC_VECTOR(7 downto 0);
-signal fivePhaseFlag : STD_LOGIC;
-signal tempPWM : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
+signal tempWriteBack : UNSIGNED(7 downto 0);
+signal fourPhaseFlag : STD_LOGIC;
+signal sixPhaseFlag : STD_LOGIC;
 -- -----------------------------------------------------
 -- END SIGNAL DECLARATIONS
 -- -----------------------------------------------------
@@ -216,9 +217,9 @@ U1 : alu PORT MAP (ALU_A, ALU_B, ALU_FUNC, ALU_OUT, ALU_N, ALU_V, ALU_Z);
 ALU_FUNC <= IR(6 downto 4);
 	
 -- ------------ Instantiate the RAM component -------------
-U2 : microram PORT MAP (CLOCK => clk, ADDRESS => ADDR, DATAOUT => RAM_DATA_OUT, DATAIN => DATA, WE => RAM_WE);
+--U2 : microram PORT MAP (CLOCK => clk, ADDRESS => ADDR, DATAOUT => RAM_DATA_OUT, DATAIN => DATA, WE => RAM_WE);
 
---U2 : microram_sim PORT MAP (CLOCK => clk, ADDRESS => ADDR, DATAOUT => RAM_DATA_OUT, DATAIN => DATA, WE => RAM_WE);
+U2 : microram_sim PORT MAP (CLOCK => clk, ADDRESS => ADDR, DATAOUT => RAM_DATA_OUT, DATAIN => DATA, WE => RAM_WE);
 
 -- ---------------- Generate RAM write enable ---------------------
 -- The address and data are presented to the RAM during the Memory phase, 
@@ -233,41 +234,45 @@ begin
 end process;
 	
 -- ---------------- Generate address bus --------------------------
-with CurrState select
-	 ADDR <= STD_LOGIC_VECTOR(PC) when Fetch,
-			 STD_LOGIC_VECTOR(PC) when Operand,  -- really a don't care
-			 IR(1) & MDR when Memory,
-			 STD_LOGIC_VECTOR(PC) when Execute,
-			 '0' & MDR when WriteBack,
-			 STD_LOGIC_VECTOR(PC) when others;   -- just to be safe
+--with CurrState select
+--	 ADDR <= STD_LOGIC_VECTOR(PC) when Fetch,
+--			 STD_LOGIC_VECTOR(PC) when Operand,  -- really a don't care
+--			 IR(1) & MDR when Memory,
+--			 STD_LOGIC_VECTOR(PC) when Execute,
+--			 IR(1) & MDR  when WriteBack,
+--			 STD_LOGIC_VECTOR(PC) when others;   -- just to be safe
 
---process (CurrState)
---begin
+process (CurrState)
+begin
 
---if (CurrState = Fetch) then
---    ADDR <= STD_LOGIC_VECTOR(PC);
---elsif (CurrState = Operand) then
---    ADDR <= STD_LOGIC_VECTOR(PC);
+if (CurrState = Fetch) then
+    ADDR <= STD_LOGIC_VECTOR(PC);
+elsif (CurrState = Operand) then
+    ADDR <= STD_LOGIC_VECTOR(PC);
     
---elsif (CurrState = Memory) then
---    ADDR <= IR(1) & MDR;
+elsif (CurrState = Memory) then
+    ADDR <= IR(1) & MDR;
     
---elsif (CurrState = Execute) then
---    if(fivePhaseFlag = '0') then
---    ADDR <= STD_LOGIC_VECTOR(PC);    
---    else
---    ADDR <= IR(1) & MDR;
---    end if;    
+elsif (CurrState = Load) then
+   ADDR <= IR(1) & MDR;
+        
+elsif (CurrState = Execute) then
+    if(sixPhaseFlag = '0') then
+    ADDR <= STD_LOGIC_VECTOR(PC);    
+    else
+    ADDR <= IR(1) & MDR;
+    end if;    
     
---elsif (CurrState = WriteBack) then
---    ADDR <= STD_LOGIC_VECTOR(PC);   
+elsif (CurrState = WriteBack) then
+    --ADDR <= STD_LOGIC_VECTOR(PC); 
+    ADDR <= IR(1) & MDR;  
 
---else
---    ADDR <= STD_LOGIC_VECTOR(PC);            
+else
+    ADDR <= STD_LOGIC_VECTOR(PC);            
 
---end if;
+end if;
 
---end process;
+end process;
 				
 -- --------------------------------------------------------------------
 -- This is the next-state logic for the 4-phase state machine.
@@ -291,7 +296,8 @@ begin
      Outport1 <= "1111110";
      PWMout <= (others => '0');
 	 temp := 0;
-	 fivePhaseFlag <= '0';
+	 fourPhaseFlag <= '0';
+	 sixPhaseFlag <= '0';
   elsif(rising_edge(clk)) then
 	 case CurrState is
 ------------------- Fetch/Operand --------------------------
@@ -299,38 +305,56 @@ begin
 					    if(Is4Phase(DATA)) then
 						   PC <= PC + 1;
 						   temp := temp + 1;
-						   fivePhaseFlag <= '0';
+						   fourPhaseFlag <= '1';
+						   sixPhaseFlag <= '0';
 						   CurrState <= Operand;
 						   
 						elsif (Is5Phase(DATA)) then
 						PC <= PC + 1;
                         temp := temp + 1;
-                        fivePhaseFlag <= '1';
+                        fourPhaseFlag <= '0';
+                        sixPhaseFlag <= '1';
+                        --Converting the 3 bits to an integer
+                        tempBit <= DecoderBit(tempBitNum);          --Bit number 
+                        
                         CurrState <= Operand;
                         
 					    else
-					       fivePhaseFlag <= '0';
+					       fourPhaseFlag <= '0';
+					       sixPhaseFlag <= '0';
 						   CurrState <= Execute;
 					    end if;
 ------------------- Operand --------------------------
 		 when Operand => MDR <= DATA;
+		 tempBitNum <= IR(4 downto 2); --Last 3 bits of instruction was the bit number to change
 					     CurrState <= Memory;
 
 ------------------- Memory --------------------------
-		 when Memory => CurrState <= Execute;
+		 when Memory => 
+		 if(sixPhaseFlag = '1') then
+		 --Converting the 3 bits to an integer
+         tempBit <= DecoderBit(tempBitNum); --Bit number 		 
+		 CurrState <= Load;
+
+		 else
+		 CurrState <= Execute;
+		 end if;
+		 
+------------------- Load --------------------------
+         when Load => CurrState <= Execute;
 	
 ------------------- Execute --------------------------				
 		 when Execute => if(temp = 2) then 
 		                    PC <= "000000010";
-					    elsif(fivePhaseFlag = '0') then --If its a 4 phase
-					        PC <= PC + 1;
-					        temp := temp +1;
-					    else --Make sure PC does not change if it is going to WriteBack state
-					    PC <= PC;
+					    elsif(sixPhaseFlag = '1') then --Make sure PC does not change if it is going to WriteBack state
+					    PC <= PC;					    
+					    else
+                            PC <= PC + 1;
+                            temp := temp +1;
 					     end if;
 					     
 					     --Check if instruction needs to go to WriteBack phase
-					     if(fivePhaseFlag = '1') then
+					     if(sixPhaseFlag = '1') then
 					     CurrState <= WriteBack;
 					     else
 					     CurrState <= Fetch;
@@ -363,8 +387,7 @@ begin
                           Outport1 <= Decoder(tempOut1);
                           end if;
                           
-                        if(Exc_PWM = '1') then
-                                                   
+                        if(Exc_PWM = '1') then                                                   
                         PWMout <= DATA;
                         end if;
                        
@@ -381,7 +404,7 @@ begin
     end if;
  
    --Increment counter
-    PC <= PC + 1;
+    --PC <= PC + 2;
      CurrState <= Fetch;                       
      
 			when Others => CurrState <= Fetch;
@@ -403,6 +426,7 @@ Exc_CCWrite <= '0';
 Exc_IOWrite <= '0';
 Exc_BCDO <= '0';
 Exc_PWM <= '0';
+Exc_CLRB <= '0';
 
 -- Same idea
 ALU_A <= A;
@@ -416,12 +440,25 @@ case CurrState is
 	 when Fetch | Operand => DATA <= RAM_DATA_OUT;
 
 ------------------- Memory --------------------------						
-	 when Memory => if(IR(0) = '0') then
+	 when Memory => 
+	                --If its a 6 phase instruction then get DATA out of RAM
+	                if(sixPhaseFlag = '1') then
+	                --Recieving DATA from RAM
+                    DATA <= RAM_DATA_OUT; 
+	               else
+	               
+	                if(IR(0) = '0') then
 					   DATA <= STD_LOGIC_VECTOR(A);
 				    else
 					   DATA <= STD_LOGIC_VECTOR(B);
 				    end if;
 
+                   end if;
+
+------------------- Load --------------------------						
+	 when Load => DATA <= RAM_DATA_OUT;  --If its a 6 phase instruction then get DATA out of RAM
+
+                   
 ------------------- Execute --------------------------				
 	 when Execute => 
 	                   case IR(7 downto 1) is
@@ -517,32 +554,25 @@ case CurrState is
                            "0011010" |
                            "0011100" |
                            "0011110" =>
-                            --Recieving DATA from RAM
-                            --DATA <= RAM_DATA_OUT; 
-                            
-                            --Last 3 bits of instruction was the bit number to change
-                           tempBitNum <= IR(4 downto 2);
-                           --Converting the 3 bits to an integer
-                           tempBit <= DecoderBit(tempBitNum);          --Bit number  
                            
                         --Changing particular bit number of DATA
                         if (tempBit = 7) then
-                            DATA <= '0' & RAM_DATA_OUT(6 downto 0);
+                            DATA <= '0' & DATA(6 downto 0);
                         elsif(tempBit = 0) then
-                           DATA <= RAM_DATA_OUT(7 downto 1) & '0';
+                            DATA <= DATA(7 downto 1) & '0';
                         else
                         
                         case tempBit is
-                        when 1 => DATA <= ( RAM_DATA_OUT(7 downto 2) & '0' ) & RAM_DATA_OUT(0);
-                        when 2 => DATA <= ( RAM_DATA_OUT(7 downto 3) & '0' ) & RAM_DATA_OUT(1 downto 0);
-                        when 3 => DATA <= ( RAM_DATA_OUT(7 downto 4) & '0' ) & RAM_DATA_OUT(2 downto 0);
-                        when 4 => DATA <= ( RAM_DATA_OUT(7 downto 5) & '0' ) & RAM_DATA_OUT(3 downto 0);
-                        when 5 => DATA <= ( RAM_DATA_OUT(7 downto 6) & '0' ) & RAM_DATA_OUT(4 downto 0);
-                        when 6 => DATA <= ( RAM_DATA_OUT(7) & '0' ) & RAM_DATA_OUT(5 downto 0);
-                        when others => DATA <= X"00";                             
-                        --DATA <= DATA & ~(1 << tempBit) Other way of clearing bit
+                        when 1 => DATA <= ( DATA(7 downto 2) & '0' ) & DATA(0);
+                        when 2 => DATA <= ( DATA(7 downto 3) & '0' ) & DATA(1 downto 0);
+                        when 3 => DATA <= ( DATA(7 downto 4) & '0' ) & DATA(2 downto 0);
+                        when 4 => DATA <= ( DATA(7 downto 5) & '0' ) & DATA(3 downto 0);
+                        when 5 => DATA <= ( DATA(7 downto 6) & '0' ) & DATA(4 downto 0);
+                        when 6 => DATA <= ( DATA(7) & '0' ) & DATA(5 downto 0);
+                        when others => DATA <= X"01";                             
+                       --DATA <= DATA & ~(1 << tempBit) Other way of clearing bit
                         end case;
-                        
+                          
                        end if;  
 						
 					      when "0000010"|"0000011" =>	       -- STOR R,M

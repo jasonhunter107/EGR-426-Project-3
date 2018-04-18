@@ -56,17 +56,22 @@ signal mem_data : t_mem_data := (0 => "11110000", -- CLR A (dummy first instruct
 	                             1 => "00000000", -- LOAD 51,A  
                                  2 => X"32",      -- ADDRESS -> 6
                                  3 => "00001000", -- OUT A  
-	                          --   4 => "00100000", -- CLRB 51,0
-	                          --   5 => X"34",      -- ADDRESS -> 6
-	                             4 => "00000000", -- LOAD 6,A  
-                                 5 => X"34",      -- ADDRESS -> 6
-	                           	 6 => "00001000", -- OUT A     
-	                           	 7 => "00000000", -- LOAD 51,A  75
-                                 8 => X"33",      -- ADDRESS -> 51
-                                 9 => "01110100", -- PWM A      
+--                                 4 => "01010000", -- BCDO A 
+	                             4 => "00110100", -- CLRB 51,1
+	                             5 => X"33",      -- ADDRESS -> 6
+	                             6 => "11110000", -- CLR A (dummy first instruction)
+	                             7 => "00000000", -- LOAD 51,A  
+	                             8 => X"33",      -- ADDRESS -> 6
+	                             9 => "00001000", -- OUT A  
+--	                             4 => "00000000", -- LOAD 6,A  
+--                                 5 => X"34",      -- ADDRESS -> 6
+--	                           	 6 => "00001000", -- OUT A     
+--	                           	 7 => "00000000", -- LOAD 51,A  75
+--                                 8 => X"33",      -- ADDRESS -> 51
+--                                 9 => "01110100", -- PWM A      
 	                    	 -- test data --
-                                50 => "11110101", -- memory location 50 set to 245
-                                51 => X"4B", -- memory location 51 set to 142
+                                50 => "11010101", -- memory location 50 set to 245
+                                51 => X"FF", -- memory location 51 set to 77; after clearing should be 76 0100-1101
                                 52 => "10010101", -- memory location 51 set to 149
                             others => "11110000"); -- all other memory locations set to CLR A instr
 

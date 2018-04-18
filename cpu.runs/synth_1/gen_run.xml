@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1523859027">
+<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1524076892">
   <File Type="RDS-PROPCONSTRS" Name="Microprocessor_Top_drc_synth.rpt"/>
   <File Type="PA-TCL" Name="Microprocessor_Top.tcl"/>
   <File Type="RDS-RDS" Name="Microprocessor_Top.vds"/>
@@ -40,7 +40,7 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/microram.vhd">
+    <File Path="$PSRCDIR/sources_1/new/microram_sim.vhd">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -52,7 +52,7 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/microram_sim.vhd">
+    <File Path="$PSRCDIR/sources_1/new/microram.vhd">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -86,5 +86,4 @@
     <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2016"/>
     <Step Id="synth_design"/>
   </Strategy>
-  <BlockFileSet Type="BlockSrcs" Name="cpuram"/>
 </GenRun>
