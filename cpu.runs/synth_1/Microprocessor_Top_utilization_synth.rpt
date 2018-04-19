@@ -1,7 +1,7 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
-| Date         : Thu Apr 19 11:34:22 2018
+| Date         : Thu Apr 19 11:41:54 2018
 | Host         : 25thBam running 64-bit major release  (build 9200)
 | Command      : report_utilization -file Microprocessor_Top_utilization_synth.rpt -pb Microprocessor_Top_utilization_synth.pb
 | Design       : Microprocessor_Top
@@ -64,13 +64,14 @@ Table of Contents
 2. Memory
 ---------
 
-+----------------+------+-------+-----------+-------+
-|    Site Type   | Used | Fixed | Available | Util% |
-+----------------+------+-------+-----------+-------+
-| Block RAM Tile |    0 |     0 |        50 |  0.00 |
-|   RAMB36/FIFO* |    0 |     0 |        50 |  0.00 |
-|   RAMB18       |    0 |     0 |       100 |  0.00 |
-+----------------+------+-------+-----------+-------+
++-------------------+------+-------+-----------+-------+
+|     Site Type     | Used | Fixed | Available | Util% |
++-------------------+------+-------+-----------+-------+
+| Block RAM Tile    |  0.5 |     0 |        50 |  1.00 |
+|   RAMB36/FIFO*    |    0 |     0 |        50 |  0.00 |
+|   RAMB18          |    1 |     0 |       100 |  1.00 |
+|     RAMB18E1 only |    1 |       |           |       |
++-------------------+------+-------+-----------+-------+
 * Note: Each Block RAM Tile only has one FIFO logic available and therefore can accommodate only one FIFO36E1 or one FIFO18E1. However, if a FIFO18E1 occupies a Block RAM Tile, that tile can still accommodate a RAMB18E1
 
 
@@ -164,6 +165,7 @@ Table of Contents
 | FDPE     |   15 |        Flop & Latch |
 | MUXF7    |    3 |               MuxFx |
 | BUFG     |    2 |               Clock |
+| RAMB18E1 |    1 |        Block Memory |
 +----------+------+---------------------+
 
 
@@ -172,8 +174,6 @@ Table of Contents
 
 +----------+------+
 | Ref Name | Used |
-+----------+------+
-| cpuram   |    1 |
 +----------+------+
 
 
