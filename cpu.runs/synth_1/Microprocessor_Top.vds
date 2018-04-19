@@ -2,8 +2,8 @@
 # Vivado v2017.2 (64-bit)
 # SW Build 1909853 on Thu Jun 15 18:39:09 MDT 2017
 # IP Build 1909766 on Thu Jun 15 19:58:00 MDT 2017
-# Start of session at: Thu Apr 19 02:43:17 2018
-# Process ID: 12372
+# Start of session at: Thu Apr 19 03:40:16 2018
+# Process ID: 10880
 # Current directory: C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.runs/synth_1
 # Command line: vivado.exe -log Microprocessor_Top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Microprocessor_Top.tcl
 # Log file: C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.runs/synth_1/Microprocessor_Top.vds
@@ -18,9 +18,9 @@ C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/ip/
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t-cpg236'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t-cpg236'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 4424 
+INFO: Helper process launched with PID 1552 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 319.406 ; gain = 81.711
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 319.734 ; gain = 82.047
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-638] synthesizing module 'Microprocessor_Top' [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/Microprocessor_Top.vhd:30]
 INFO: [Synth 8-3491] module 'cpu' declared at 'C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:21' bound to instance 'c1' of component 'cpu' [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/Microprocessor_Top.vhd:78]
@@ -31,8 +31,8 @@ WARNING: [Synth 8-6014] Unused sequential element RETVAL_reg was removed.  [C:/U
 INFO: [Synth 8-256] done synthesizing module 'alu' (1#1) [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/alu.vhd:43]
 INFO: [Synth 8-3491] module 'microram' declared at 'C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/microram.vhd:29' bound to instance 'U2' of component 'microram' [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:206]
 INFO: [Synth 8-638] synthesizing module 'microram' [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/microram.vhd:38]
-INFO: [Synth 8-3491] module 'cpuram' declared at 'C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.runs/synth_1/.Xil/Vivado-12372-25thBam/realtime/cpuram_stub.vhdl:5' bound to instance 'U1' of component 'cpuram' [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/microram.vhd:52]
-INFO: [Synth 8-638] synthesizing module 'cpuram' [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.runs/synth_1/.Xil/Vivado-12372-25thBam/realtime/cpuram_stub.vhdl:16]
+INFO: [Synth 8-3491] module 'cpuram' declared at 'C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.runs/synth_1/.Xil/Vivado-10880-25thBam/realtime/cpuram_stub.vhdl:5' bound to instance 'U1' of component 'cpuram' [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/microram.vhd:52]
+INFO: [Synth 8-638] synthesizing module 'cpuram' [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.runs/synth_1/.Xil/Vivado-10880-25thBam/realtime/cpuram_stub.vhdl:16]
 INFO: [Synth 8-256] done synthesizing module 'microram' (2#1) [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/microram.vhd:38]
 WARNING: [Synth 8-614] signal 'PC' is read in the process but is not in the sensitivity list [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:225]
 WARNING: [Synth 8-614] signal 'IR' is read in the process but is not in the sensitivity list [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:225]
@@ -72,7 +72,7 @@ INFO: [Synth 8-256] done synthesizing module 'PWM' (6#1) [C:/Users/Jason/Desktop
 INFO: [Synth 8-256] done synthesizing module 'Microprocessor_Top' (7#1) [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/Microprocessor_Top.vhd:30]
 WARNING: [Synth 8-3331] design clk_divider has unconnected port reset
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 369.730 ; gain = 132.035
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 370.195 ; gain = 132.508
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -82,15 +82,15 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 369.730 ; gain = 132.035
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 370.195 ; gain = 132.508
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7a35tcpg236-1
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.runs/synth_1/.Xil/Vivado-12372-25thBam/dcp3/cpuram_in_context.xdc] for cell 'c1/U2/U1'
-Finished Parsing XDC File [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.runs/synth_1/.Xil/Vivado-12372-25thBam/dcp3/cpuram_in_context.xdc] for cell 'c1/U2/U1'
+Parsing XDC File [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.runs/synth_1/.Xil/Vivado-10880-25thBam/dcp3/cpuram_in_context.xdc] for cell 'c1/U2/U1'
+Finished Parsing XDC File [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.runs/synth_1/.Xil/Vivado-10880-25thBam/dcp3/cpuram_in_context.xdc] for cell 'c1/U2/U1'
 Parsing XDC File [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/constrs_1/new/cpu_pins.xdc]
 Finished Parsing XDC File [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/constrs_1/new/cpu_pins.xdc]
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/constrs_1/new/cpu_pins.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/Microprocessor_Top_propImpl.xdc].
@@ -100,23 +100,23 @@ Completed Processing XDC Constraints
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 686.039 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 686.262 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 686.039 ; gain = 448.344
+Finished Constraint Validation : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 686.262 ; gain = 448.574
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcpg236-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 686.039 ; gain = 448.344
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 686.262 ; gain = 448.574
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property DONT_TOUCH = true for c1/U2/U1. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 686.039 ; gain = 448.344
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 686.262 ; gain = 448.574
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5546] ROM "V" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "Z" won't be mapped to RAM because it is too sparse
@@ -161,7 +161,7 @@ WARNING: [Synth 8-327] inferring latch for variable 'DATA_reg' [C:/Users/Jason/D
 WARNING: [Synth 8-327] inferring latch for variable 'tempOut0_reg' [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:404]
 WARNING: [Synth 8-327] inferring latch for variable 'tempOut1_reg' [C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.srcs/sources_1/new/cpu.vhd:405]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 686.039 ; gain = 448.344
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 686.262 ; gain = 448.574
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -315,7 +315,7 @@ WARNING: [Synth 8-3332] Sequential element (c1/Debounce1_reg[1]) is unused and w
 WARNING: [Synth 8-3332] Sequential element (c1/Debounce0_reg[1]) is unused and will be removed from module Microprocessor_Top.
 WARNING: [Synth 8-3332] Sequential element (c1/Ledport1_reg[7]) is unused and will be removed from module Microprocessor_Top.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 686.039 ; gain = 448.344
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:18 . Memory (MB): peak = 686.262 ; gain = 448.574
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -327,13 +327,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:27 ; elapsed = 00:00:28 . Memory (MB): peak = 686.602 ; gain = 448.906
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:26 ; elapsed = 00:00:28 . Memory (MB): peak = 686.262 ; gain = 448.574
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:27 ; elapsed = 00:00:28 . Memory (MB): peak = 687.195 ; gain = 449.500
+Finished Timing Optimization : Time (s): cpu = 00:00:26 ; elapsed = 00:00:28 . Memory (MB): peak = 686.262 ; gain = 448.574
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -345,7 +345,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:27 ; elapsed = 00:00:28 . Memory (MB): peak = 715.898 ; gain = 478.203
+Finished Technology Mapping : Time (s): cpu = 00:00:27 ; elapsed = 00:00:28 . Memory (MB): peak = 714.113 ; gain = 476.426
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -369,7 +369,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 715.898 ; gain = 478.203
+Finished IO Insertion : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 714.113 ; gain = 476.426
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -382,7 +382,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 715.898 ; gain = 478.203
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 714.113 ; gain = 476.426
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -394,25 +394,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 715.898 ; gain = 478.203
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 714.113 ; gain = 476.426
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 715.898 ; gain = 478.203
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 714.113 ; gain = 476.426
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 715.898 ; gain = 478.203
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 714.113 ; gain = 476.426
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 715.898 ; gain = 478.203
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 714.113 ; gain = 476.426
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -460,11 +460,11 @@ Report Instance Areas:
 |7     |  p1     |PWM          |   116|
 +------+---------+-------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 715.898 ; gain = 478.203
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 714.113 ; gain = 476.426
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 16 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:18 ; elapsed = 00:00:23 . Memory (MB): peak = 715.898 ; gain = 161.895
-Synthesis Optimization Complete : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 715.898 ; gain = 478.203
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:18 ; elapsed = 00:00:23 . Memory (MB): peak = 714.113 ; gain = 160.359
+Synthesis Optimization Complete : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 714.113 ; gain = 476.426
 INFO: [Project 1-571] Translating synthesized netlist
 INFO: [Netlist 29-17] Analyzing 73 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
@@ -476,7 +476,7 @@ INFO: [Project 1-111] Unisim Transformation Summary:
 
 63 Infos, 43 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:30 ; elapsed = 00:00:32 . Memory (MB): peak = 715.898 ; gain = 483.227
+synth_design: Time (s): cpu = 00:00:30 ; elapsed = 00:00:32 . Memory (MB): peak = 714.113 ; gain = 481.445
 INFO: [Common 17-1381] The checkpoint 'C:/Users/Jason/Desktop/EGR 426/Project3/EGR-426-Project-3/cpu.runs/synth_1/Microprocessor_Top.dcp' has been generated.
-report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 715.898 ; gain = 0.000
-INFO: [Common 17-206] Exiting Vivado at Thu Apr 19 02:43:55 2018...
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 714.113 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Thu Apr 19 03:40:53 2018...

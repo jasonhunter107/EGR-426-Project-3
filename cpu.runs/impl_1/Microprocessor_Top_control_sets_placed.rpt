@@ -1,7 +1,7 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
-| Date         : Thu Apr 19 02:44:31 2018
+| Date         : Thu Apr 19 03:41:29 2018
 | Host         : 25thBam running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file Microprocessor_Top_control_sets_placed.rpt
 | Design       : Microprocessor_Top
@@ -48,23 +48,23 @@ Table of Contents
 +-----------------------------+----------------------------+----------------------------+------------------+----------------+
 |         Clock Signal        |        Enable Signal       |      Set/Reset Signal      | Slice Load Count | Bel Load Count |
 +-----------------------------+----------------------------+----------------------------+------------------+----------------+
-|  c1/DATA_reg[0]_i_2_n_0     |                            |                            |                1 |              1 |
-|  c1/DATA_reg[1]_i_2_n_0     |                            |                            |                1 |              1 |
 |  c1/DATA_reg[2]_i_2_n_0     |                            |                            |                1 |              1 |
-|  c1/DATA_reg[3]_i_2_n_0     |                            |                            |                1 |              1 |
+|  c1/DATA_reg[1]_i_2_n_0     |                            |                            |                1 |              1 |
 |  c1/DATA_reg[4]_i_2_n_0     |                            |                            |                1 |              1 |
+|  c1/DATA_reg[0]_i_2_n_0     |                            |                            |                1 |              1 |
+|  c1/DATA_reg[3]_i_2_n_0     |                            |                            |                1 |              1 |
 |  c1/DATA_reg[6]_i_2_n_0     |                            |                            |                1 |              1 |
 |  c1/DATA_reg[5]_i_2_n_0     |                            |                            |                1 |              1 |
 |  c1/DATA_reg[7]_i_2_n_0     |                            |                            |                1 |              1 |
 |  cd1/CLK                    |                            | reset_IBUF                 |                1 |              2 |
 |  clk_IBUF_BUFG              |                            |                            |                3 |              3 |
-|  c1/tempOut0_reg[3]_i_2_n_0 |                            |                            |                1 |              4 |
 |  c1/tempOut1_reg[3]_i_2_n_0 |                            |                            |                1 |              4 |
+|  c1/tempOut0_reg[3]_i_2_n_0 |                            |                            |                1 |              4 |
 |  clkout_1Hz_BUFG            |                            |                            |                3 |              6 |
 |  clkout_1Hz_BUFG            |                            | reset_IBUF                 |                4 |              6 |
 |  clkout_1Hz_BUFG            | c1/Ledport1[6]_i_1_n_0     | reset_IBUF                 |                3 |              7 |
-|  clkout_1Hz_BUFG            | c1/A                       | reset_IBUF                 |                4 |              8 |
 |  clkout_1Hz_BUFG            | c1/B                       | reset_IBUF                 |                2 |              8 |
+|  clkout_1Hz_BUFG            | c1/A                       | reset_IBUF                 |                4 |              8 |
 |  clkout_1Hz_BUFG            | c1/MDR[7]_i_1_n_0          | reset_IBUF                 |                2 |              8 |
 |  clkout_1Hz_BUFG            | c1/Ledport0[7]_i_1_n_0     | reset_IBUF                 |                2 |              8 |
 |  clkout_1Hz_BUFG            | c1/PWMout[7]_i_1_n_0       | reset_IBUF                 |                3 |              8 |
@@ -73,8 +73,8 @@ Table of Contents
 |  clkout_1Hz_BUFG            | c1/tempOut0_reg[3]_i_2_n_0 | reset_IBUF                 |                3 |             14 |
 |  clk_IBUF_BUFG              |                            | cd1/clkCounter1[0]_i_1_n_0 |                5 |             20 |
 |  clk_IBUF_BUFG              |                            | cd1/clear                  |                7 |             28 |
-|  clk_IBUF_BUFG              |                            | p1/counter[31]_i_1_n_0     |                9 |             32 |
 |  clkout_1Hz_BUFG            | c1/temp                    | reset_IBUF                 |                8 |             32 |
+|  clk_IBUF_BUFG              |                            | p1/counter[31]_i_1_n_0     |                9 |             32 |
 +-----------------------------+----------------------------+----------------------------+------------------+----------------+
 
 
