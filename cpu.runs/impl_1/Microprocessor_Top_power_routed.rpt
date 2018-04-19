@@ -1,7 +1,7 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2017.2 (win64) Build 1909853 Thu Jun 15 18:39:09 MDT 2017
-| Date             : Thu Apr 19 03:41:51 2018
+| Date             : Thu Apr 19 11:35:21 2018
 | Host             : 25thBam running 64-bit major release  (build 9200)
 | Command          : report_power -file Microprocessor_Top_power_routed.rpt -pb Microprocessor_Top_power_summary_routed.pb -rpx Microprocessor_Top_power_routed.rpx
 | Design           : Microprocessor_Top
@@ -30,8 +30,8 @@ Table of Contents
 ----------
 
 +--------------------------+----------------------------------+
-| Total On-Chip Power (W)  | 21.265 (Junction temp exceeded!) |
-| Dynamic (W)              | 20.778                           |
+| Total On-Chip Power (W)  | 41.430 (Junction temp exceeded!) |
+| Dynamic (W)              | 40.943                           |
 | Device Static (W)        | 0.486                            |
 | Effective TJA (C/W)      | 5.0                              |
 | Max Ambient (C)          | 0.0                              |
@@ -49,18 +49,18 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Slice Logic    |     1.293 |      603 |       --- |             --- |
-|   LUT as Logic |     1.139 |      292 |     20800 |            1.40 |
-|   CARRY4       |     0.069 |       39 |      8150 |            0.48 |
-|   Register     |     0.047 |      224 |     41600 |            0.54 |
+| Slice Logic    |     1.240 |      622 |       --- |             --- |
+|   LUT as Logic |     1.067 |      301 |     20800 |            1.45 |
+|   CARRY4       |     0.077 |       39 |      8150 |            0.48 |
+|   Register     |     0.061 |      227 |     41600 |            0.55 |
 |   BUFG         |     0.032 |        2 |        32 |            6.25 |
-|   F7/F8 Muxes  |     0.005 |        5 |     32600 |            0.02 |
+|   F7/F8 Muxes  |     0.002 |        3 |     32600 |           <0.01 |
 |   Others       |     0.000 |       13 |       --- |             --- |
-| Signals        |     1.594 |      529 |       --- |             --- |
-| Block RAM      |     0.585 |      0.5 |        50 |            1.00 |
-| I/O            |    17.306 |       45 |       106 |           42.45 |
+| Signals        |     1.588 |      551 |       --- |             --- |
+| Block RAM      |     0.584 |      0.5 |        50 |            1.00 |
+| I/O            |    37.531 |       45 |       106 |           42.45 |
 | Static Power   |     0.486 |          |           |                 |
-| Total          |    21.265 |          |           |                 |
+| Total          |    41.430 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -70,9 +70,9 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     3.837 |       3.496 |      0.341 |
-| Vccaux    |       1.800 |     0.685 |       0.632 |      0.053 |
-| Vcco33    |       3.300 |     4.880 |       4.879 |      0.001 |
+| Vccint    |       1.000 |     3.777 |       3.436 |      0.341 |
+| Vccaux    |       1.800 |     1.426 |       1.373 |      0.053 |
+| Vcco33    |       3.300 |    10.605 |      10.604 |      0.001 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |
@@ -137,20 +137,20 @@ Table of Contents
 +--------------------------------------------------+-----------+
 | Name                                             | Power (W) |
 +--------------------------------------------------+-----------+
-| Microprocessor_Top                               |    20.778 |
-|   M1                                             |     0.273 |
-|   c1                                             |     2.474 |
-|     U1                                           |     0.197 |
-|     U2                                           |     1.189 |
-|       U1                                         |     0.672 |
-|         U0                                       |     0.672 |
-|           inst_blk_mem_gen                       |     0.672 |
-|             gnbram.gnativebmg.native_blk_mem_gen |     0.672 |
-|               valid.cstr                         |     0.672 |
-|                 ramloop[0].ram.r                 |     0.672 |
-|                   prim_init.ram                  |     0.672 |
-|   cd1                                            |     0.213 |
-|   p1                                             |     0.314 |
+| Microprocessor_Top                               |    40.943 |
+|   M1                                             |     0.387 |
+|   c1                                             |     2.257 |
+|     U1                                           |     0.141 |
+|     U2                                           |     1.075 |
+|       U1                                         |     0.667 |
+|         U0                                       |     0.667 |
+|           inst_blk_mem_gen                       |     0.667 |
+|             gnbram.gnativebmg.native_blk_mem_gen |     0.667 |
+|               valid.cstr                         |     0.667 |
+|                 ramloop[0].ram.r                 |     0.667 |
+|                   prim_init.ram                  |     0.667 |
+|   cd1                                            |     0.226 |
+|   p1                                             |     0.343 |
 +--------------------------------------------------+-----------+
 
 

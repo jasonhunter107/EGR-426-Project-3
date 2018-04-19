@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1524123607">
+<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1524152015">
   <File Type="RDS-PROPCONSTRS" Name="Microprocessor_Top_drc_synth.rpt"/>
   <File Type="PA-TCL" Name="Microprocessor_Top.tcl"/>
   <File Type="RDS-RDS" Name="Microprocessor_Top.vds"/>

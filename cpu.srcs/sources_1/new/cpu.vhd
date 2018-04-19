@@ -105,7 +105,8 @@ signal tempWriteBack : UNSIGNED(7 downto 0);
 signal fourPhaseFlag : STD_LOGIC;
 signal sevenPhaseFlag : STD_LOGIC;
 signal decmFlag : STD_LOGIC;
-signal ninePhaseFlag : STD_LOGIC;
+signal resetFlag : STD_LOGIC := '0';
+signal countWhenReset : STD_LOGIC_VECTOR(1 downto 0) := "00";
 -- -----------------------------------------------------
 -- END SIGNAL DECLARATIONS
 -- -----------------------------------------------------
@@ -289,7 +290,7 @@ process (clk,reset)
 variable temp : integer;
 begin
     --If user pressed reset
-  if(reset = '1') then
+  if(reset = '1' or resetFlag = '1') then
 	 CurrState <= Fetch;
 	 PC <= (others => '0');
 	 IR <= (others => '0');
@@ -307,8 +308,21 @@ begin
 	 temp := 0;
 	 fourPhaseFlag <= '0';
 	 sevenPhaseFlag <= '0';
-	 ninePhaseFlag <= '0';
 	 decmFlag <= '0';
+	 
+	 --Wait a second to reset CPU
+	 if(resetFlag = '1') then
+	   if(rising_edge(clk)) then
+	   countWhenReset <= countWhenReset + 1;
+	   else
+	   countWhenReset <= countWhenReset;
+	   end if;
+	 end if;
+	 
+	 --Turn off reset
+	 if( countWhenReset = "01") then
+	 resetFlag <= '0';
+	 end if;
   elsif(rising_edge(clk)) then
 	 case CurrState is
 ------------------- Fetch/Operand --------------------------
@@ -335,7 +349,15 @@ begin
 					    else
 					       fourPhaseFlag <= '0';
 					       sevenPhaseFlag <= '0';
+					       
+					       --Check if its at the end
+					       if( PC >= 34) then
+					       resetFlag <= '1';
+					       else
+					       PC <= PC;
+					       
 						   CurrState <= Execute;
+						   end if;
 					    end if;
 ------------------- Operand --------------------------
 		 when Operand =>

@@ -44,10 +44,50 @@ architecture a of microram_sim is
 type t_mem_data is array(0 to 511) of std_logic_vector(7 downto 0);
 
 -- Your program is entered here, as initialization values for the "mem_data" signal.
-signal mem_data : t_mem_data := (0 => "11110000", -- CLR A (dummy first instruction)
-                                 1 =>       "00000000",
-                                 2 =>       "00010111",
-                                 3 =>      "01010000",
+signal mem_data : t_mem_data := (
+0 => "11110000",
+1 => "00000000",
+2 => "00100010",
+3 => "01010000",
+4 => "00000001",
+5 => "00100011",
+6 => "01010001",
+7 => "10000000",
+8 => "01010000",
+9 => "01110000",
+10 => "01110000",
+11 => "11110000",
+12 => "00000000",
+13 => "00100100",
+14 => "01110100",
+15 => "00111000",
+16 => "00100100",
+17 => "11110000",
+18 => "00000000",
+19 => "00100100",
+20 => "01110100",
+21 => "11110000",
+22 => "01111100",
+23 => "00100101",
+24 => "11110000",
+25 => "00000000",
+26 => "00100101",
+27 => "00001000",
+28 => "01111100",
+29 => "00100101",
+30 => "00000000",
+31 => "00100110",
+32 => "00001000",
+33 => "11110000",
+34 => "00001001",
+35 => "00000011",
+36 => "01011111",
+37 => "00000010",
+38 => "00110010",
+--                                0 => "11110000", -- CLR A (dummy first instruction)
+--                                 1 =>       "00000000",
+--                                 2 =>       "00010111",
+--                                 3 =>      "01010000",
 --	                             1 => "00000000", -- LOAD 51,A  
 --                                 2 => X"32",      -- ADDRESS -> 6
 --                                 3 => "01110000", -- DEB 0 A
@@ -70,9 +110,9 @@ signal mem_data : t_mem_data := (0 => "11110000", -- CLR A (dummy first instruct
 --                                 5 => X"33",      -- ADDRESS -> 51
 --                                 6 => "01110100", -- PWM A      
 	                    	 -- test data --
-                                23 => "00001001", -- memory location 50 set to 245
-                                51 => X"01", -- memory location 51 set to 77; after clearing should be 76 0100-1101
-                                52 => "10010101", -- memory location 51 set to 149
+--                                23 => "00001001", -- memory location 50 set to 245
+--                                51 => X"01", -- memory location 51 set to 77; after clearing should be 76 0100-1101
+--                                52 => "10010101", -- memory location 51 set to 149
                             others => "11110000"); -- all other memory locations set to CLR A instr
 
 begin
