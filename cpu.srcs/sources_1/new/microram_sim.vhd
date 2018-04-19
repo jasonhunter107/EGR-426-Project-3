@@ -45,17 +45,24 @@ type t_mem_data is array(0 to 511) of std_logic_vector(7 downto 0);
 
 -- Your program is entered here, as initialization values for the "mem_data" signal.
 signal mem_data : t_mem_data := (0 => "11110000", -- CLR A (dummy first instruction)
-	                             1 => "00000000", -- LOAD 51,A  
-                                 2 => X"32",      -- ADDRESS -> 6
-                                 3 => "01110000", -- DEB 0 A
---                                 3 => "00001000", -- OUT A  
+                                 1 =>       "00000000",
+                                 2 =>       "00010111",
+                                 3 =>      "01010000",
+--	                             1 => "00000000", -- LOAD 51,A  
+--                                 2 => X"32",      -- ADDRESS -> 6
+--                                 3 => "01110000", -- DEB 0 A
+ --                                3 => "00001000", -- OUT A  
 --                                 3 => "01010000", -- BCDO A 
 --	                             4 => "00110100", -- CLRB 51,1
+ --                                4 => "01111100", -- DECRMSZ 51,1
 --	                             5 => X"33",      -- ADDRESS -> 6
 --	                             6 => "11110000", -- CLR A (dummy first instruction)
---	                             7 => "00000000", -- LOAD 51,A  
---	                             8 => X"33",      -- ADDRESS -> 6
---	                             9 => "00001000", -- OUT A  
+--	                             6 => "00000000", -- LOAD 51,A  
+--	                             7 => X"33",      -- ADDRESS -> 6
+ --                                8 => "11110000", -- CLR A (dummy first instruction)
+ --                                9 => "00000000", -- LOAD 51,A  
+--                                 10 => X"34",      -- ADDRESS -> 6
+--	                             11 => "00001000", -- OUT A  
 --	                             4 => "00000000", -- LOAD 6,A  
 --                                 5 => X"34",      -- ADDRESS -> 6
 --	                           	 6 => "00001000", -- OUT A     
@@ -63,8 +70,8 @@ signal mem_data : t_mem_data := (0 => "11110000", -- CLR A (dummy first instruct
 --                                 5 => X"33",      -- ADDRESS -> 51
 --                                 6 => "01110100", -- PWM A      
 	                    	 -- test data --
-                                50 => "11010101", -- memory location 50 set to 245
-                                51 => X"4B", -- memory location 51 set to 77; after clearing should be 76 0100-1101
+                                23 => "00001001", -- memory location 50 set to 245
+                                51 => X"01", -- memory location 51 set to 77; after clearing should be 76 0100-1101
                                 52 => "10010101", -- memory location 51 set to 149
                             others => "11110000"); -- all other memory locations set to CLR A instr
 

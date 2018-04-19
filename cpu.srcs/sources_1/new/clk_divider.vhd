@@ -26,7 +26,8 @@ use IEEE.STD_LOGIC_unsigned.ALL;
 
 entity clk_divider is
     port ( clkin, reset : in STD_LOGIC;
-           clkout_1Hz, clkout_500Hz, clkout_1KHz : out STD_LOGIC
+           clkout_1Hz, clkout_500Hz : out STD_LOGIC
+           --clkout_1KHz : out STD_LOGIC
           );
 end clk_divider;
 
@@ -35,7 +36,7 @@ architecture Behavioral of clk_divider is
 --Since 100MHz = 1 second we want 0.5 seconds so make counter count up to 49,999,999 cycles
 -- Since we start at 0, we want to count up to 49,999,999
 
-signal clkPreScaler: STD_LOGIC_VECTOR (27 downto 0) := X"2FAF07F"; --Hex value of 99,999,999 cycles 5F5E0FF
+signal clkPreScaler: STD_LOGIC_VECTOR (27 downto 0) := X"5F5E0FF"; --Hex value of 99,999,999 cycles 5F5E0FF; 2FAF07F = 0.5s 
 signal clkPreScaler1: STD_LOGIC_VECTOR (19 downto 0) := X"30D3F"; --Hex value of 199,999 cycles
 signal clkPreScaler2: STD_LOGIC_VECTOR (19 downto 0) := X"1869F"; --Hex value of 99,999 cycles - 1KHZ
 
@@ -89,6 +90,6 @@ end process;
 --Assign count to output
 clkout_1Hz <= count0;
 clkout_500Hz <= count1;
-clkout_1KHz <= count2;
+--clkout_1KHz <= count2;
 
 end Behavioral;

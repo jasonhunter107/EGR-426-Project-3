@@ -1,7 +1,8 @@
 # compile vhdl design source files
+vhdl xil_defaultlib  "../../../cpu.srcs/sources_1/ip/cpuram/cpuram_sim_netlist.vhdl"
 vhdl xil_defaultlib  "../../../cpu.srcs/sources_1/new/alu.vhd"
 vhdl xil_defaultlib  "../../../cpu.srcs/sources_1/new/cpu.vhd"
-vhdl xil_defaultlib  "../../../cpu.srcs/sources_1/new/microram_sim.vhd"
+vhdl xil_defaultlib  "../../../cpu.srcs/sources_1/new/microram.vhd"
 vhdl xil_defaultlib  "../../../cpu.srcs/sim_1/new/cputb1.vhd"
 
 # Do not sort compile order

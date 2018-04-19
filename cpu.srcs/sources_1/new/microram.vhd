@@ -1,21 +1,13 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company: Grand Valley State University
+-- Engineer: Jason Hunter
 -- 
 -- Create Date: 03/16/2017 05:16:34 PM
 -- Design Name: 
 -- Module Name: microram - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- Project Name: EGR-426-Project-3
+-- Target Devices: Artix 7
+-- Description: A Top level component of the CPU
 ----------------------------------------------------------------------------------
 
 

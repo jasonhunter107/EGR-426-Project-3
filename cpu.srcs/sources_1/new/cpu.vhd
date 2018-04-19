@@ -43,16 +43,7 @@ signal ALU_OUT : SIGNED(7 downto 0);
 signal ALU_N, ALU_V, ALU_Z : STD_LOGIC;
 
 -- ------------ Declare the 512x8 RAM component --------------
---component microram is
---port (  CLOCK   : in STD_LOGIC ;
---		ADDRESS	: in STD_LOGIC_VECTOR (8 downto 0);
---		DATAOUT : out STD_LOGIC_VECTOR (7 downto 0);
---		DATAIN  : in STD_LOGIC_VECTOR (7 downto 0);
---		WE	: in STD_LOGIC 
---	 );
---end component;
-
-component microram_sim is
+component microram is
 port (  CLOCK   : in STD_LOGIC ;
 		ADDRESS	: in STD_LOGIC_VECTOR (8 downto 0);
 		DATAOUT : out STD_LOGIC_VECTOR (7 downto 0);
@@ -60,6 +51,15 @@ port (  CLOCK   : in STD_LOGIC ;
 		WE	: in STD_LOGIC 
 	 );
 end component;
+
+--component microram_sim is
+--port (  CLOCK   : in STD_LOGIC ;
+--		ADDRESS	: in STD_LOGIC_VECTOR (8 downto 0);
+--		DATAOUT : out STD_LOGIC_VECTOR (7 downto 0);
+--		DATAIN  : in STD_LOGIC_VECTOR (7 downto 0);
+--		WE	: in STD_LOGIC 
+--	 );
+--end component;
 
 -- -----------------------------------------------------
 -- SIGNAL DECLARATIONS
@@ -70,7 +70,7 @@ signal ADDR : STD_LOGIC_VECTOR(8 downto 0);	         -- ADDRESS input of RAM
 signal RAM_WE : STD_LOGIC;
 
 -- ---------- Declare the state names and state variable -------------
-type STATE_TYPE is (Fetch, Operand, Memory, Load, Execute, WriteBack, SetAddr);
+type STATE_TYPE is (Fetch, Operand, Memory, Load, Execute, WriteBack, SetAddr, CheckIR, SetAddr2);
 signal CurrState : STATE_TYPE;
 
 -- ---------- Declare the internal CPU registers -------------------
@@ -104,6 +104,8 @@ signal tempBitNum : STD_LOGIC_VECTOR(2 downto 0);
 signal tempWriteBack : UNSIGNED(7 downto 0);
 signal fourPhaseFlag : STD_LOGIC;
 signal sevenPhaseFlag : STD_LOGIC;
+signal decmFlag : STD_LOGIC;
+signal ninePhaseFlag : STD_LOGIC;
 -- -----------------------------------------------------
 -- END SIGNAL DECLARATIONS
 -- -----------------------------------------------------
@@ -132,10 +134,12 @@ end function;
 -- -----------------------------------------------------	
 function Is7Phase(constant DATA : STD_LOGIC_VECTOR(7 downto 0)) return BOOLEAN is
 variable MSB4 : STD_LOGIC_VECTOR(2 downto 0);
+variable MSB6 : STD_LOGIC_VECTOR(6 downto 0);
 variable RETVAL : BOOLEAN;
 begin
   MSB4 := DATA(7 downto 5);
-  if(MSB4 = "001") then
+  MSB6 := DATA(7 downto 1);
+  if(MSB4 = "001" or MSB6 = "0111110") then
 	 RETVAL := true;
   else
 	 RETVAL := false;
@@ -199,16 +203,17 @@ U1 : alu PORT MAP (ALU_A, ALU_B, ALU_FUNC, ALU_OUT, ALU_N, ALU_V, ALU_Z);
 ALU_FUNC <= IR(6 downto 4);
 	
 -- ------------ Instantiate the RAM component -------------
---U2 : microram PORT MAP (CLOCK => clk, ADDRESS => ADDR, DATAOUT => RAM_DATA_OUT, DATAIN => DATA, WE => RAM_WE);
+U2 : microram PORT MAP (CLOCK => clk, ADDRESS => ADDR, DATAOUT => RAM_DATA_OUT, DATAIN => DATA, WE => RAM_WE);
 
-U2 : microram_sim PORT MAP (CLOCK => clk, ADDRESS => ADDR, DATAOUT => RAM_DATA_OUT, DATAIN => DATA, WE => RAM_WE);
+--U2 : microram_sim PORT MAP (CLOCK => clk, ADDRESS => ADDR, DATAOUT => RAM_DATA_OUT, DATAIN => DATA, WE => RAM_WE);
 
 -- ---------------- Generate RAM write enable ---------------------
 -- The address and data are presented to the RAM during the Memory phase, 
 -- hence this is when we need to set RAM_WE high.
 process (CurrState,IR)
 begin
-  if( ((CurrState = Memory) and (IR(7 downto 2) = "000001")) or ( (CurrState = WriteBack) and (IR(7 downto 5) = "001")) ) then
+  if( ((CurrState = Memory) and (IR(7 downto 2) = "000001")) or ( (CurrState = WriteBack) and (IR(7 downto 5) = "001"))
+        or ( (CurrState = WriteBack) and (IR(7 downto 1) = "0111110"))  ) then
 	  RAM_WE <= '1';
   else
 	  RAM_WE <= '0';
@@ -253,11 +258,21 @@ elsif (CurrState = Execute) then
 elsif (CurrState = WriteBack) then
     ADDR <= IR(1) & MDR;  
 
---If current state is Fetch then set Address to the PC    
+--If current state is SetAddr then set Address to the PC    
 -- This is important because we need to set the address to the PC
--- the clock cycle before the next instruction's fetch phase.
+-- the clock cycle before we check the instruction.
 elsif (CurrState = SetAddr) then
     ADDR <= STD_LOGIC_VECTOR(PC); 
+    
+--If current state is CheckIR then set Address to the PC    
+ elsif (CurrState = CheckIR) then
+    ADDR <= STD_LOGIC_VECTOR(PC);
+     
+--If current state is SetAddr2 then set Address to the PC    
+    -- This is important because we need to set the address to the PC
+    -- the clock cycle before the next instruction's fetch phase.
+ elsif (CurrState = SetAddr2) then
+    ADDR <= STD_LOGIC_VECTOR(PC);     
 
 --Just in case
 else
@@ -292,6 +307,8 @@ begin
 	 temp := 0;
 	 fourPhaseFlag <= '0';
 	 sevenPhaseFlag <= '0';
+	 ninePhaseFlag <= '0';
+	 decmFlag <= '0';
   elsif(rising_edge(clk)) then
 	 case CurrState is
 ------------------- Fetch/Operand --------------------------
@@ -394,7 +411,9 @@ begin
                        
 ------------------- WriteBack --------------------------
     when WriteBack => 
- 
+    
+    --If instruction is not DECMSZ
+    if(decmFlag <= '0') then
     --Check the condition flags after clearing a certain bit number
     if(DATA = X"00") then
     Z <= '1';
@@ -405,12 +424,46 @@ begin
     N <= '0';
     end if;
     
+    end if;
+    
     --Go to SetAddr phase
     CurrState <= SetAddr;   
      
 ------------------- SetAddr --------------------------
-     when SetAddr => CurrState <= Fetch;           
+     when SetAddr => 
+     --If the decrement value went to zero
+     if(DATA = X"00") then
+     CurrState <= CheckIR;
      
+     --If the new decremented value was not zero then
+     -- proceed to normal and go to fetch state
+     else
+     CurrState <= Fetch;    
+     
+     end if;    
+        
+------------------- CheckIR --------------------------     
+     when CheckIR =>
+     --If the instruction that needs to be skipped has 4 or 7 phases then increment 
+     -- PC by 2 to skip memory location
+       if(Is4Phase(DATA) or Is7Phase(DATA)) then
+        PC <= PC + 2;
+     --If the instruction that needs to be skipped only has 2 phases then increment 
+     -- PC by 1
+       else
+       PC <= PC + 1;
+       
+       end if;
+       
+    CurrState <= SetAddr2;
+    
+    
+ ------------------- SetAddr2 --------------------------
+   when SetAddr2 => CurrState <= Fetch;
+         
+         
+         
+         
 when Others => CurrState <= Fetch;
 			
 
@@ -517,7 +570,7 @@ case CurrState is
                                tempOut0 <= DATA(3 downto 0); --Take lower 4 bits
                                tempOut1 <= DATA(7 downto 4); --Tale upper 4 bits
                                end if;
-                               Exc_IOWrite <= '1'; 
+                               --Exc_IOWrite <= '1'; 
                                Exc_BCDO <= '1';      
                                
                         when "0111000" | "0111001" =>          -- DEB 0, R, ; DEB 1, R,  
@@ -547,7 +600,21 @@ case CurrState is
                           else
                           DATA <= STD_LOGIC_VECTOR(B);
                          end if;
-                          Exc_PWM <= '1'; 
+                          Exc_PWM <= '1';
+                          
+                        when "0111110" =>          -- DECMSZ
+                        
+                        --If the DATA is already at zero then don't
+                        -- do anything
+                          if(DATA = X"00") then
+                          DATA <= X"00";
+                          
+                        --Decrement DATA
+                          else
+                          DATA <= DATA - 1;
+                          end if;
+                        --Set the flag is the instruction was DECMSZ
+                          decmFlag <= '1';
                           
             ------------------- CLRB M B instruction case --------------------------
                       when "0010000" |
@@ -593,7 +660,14 @@ case CurrState is
  
   ------------------- SetAddr --------------------------	    
      when SetAddr => null;
-     
+  
+ ------------------- SetAddr --------------------------	    
+   when CheckIR => null;
+        
+  ------------------- SetAddr2 --------------------------	    
+   when SetAddr2 => null;
+   
+   
      when others => null;
      
 		end case;	
