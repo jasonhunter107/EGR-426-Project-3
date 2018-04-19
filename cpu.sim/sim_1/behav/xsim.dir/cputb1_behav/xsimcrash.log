@@ -1,5 +1,6 @@
-Unable to capture context for thread 11704 in process 8848, can not generate back trace
-Unable to capture context for thread 12840 in process 8848, can not generate back trace
+Unable to capture context for thread 1308 in process 8480, can not generate back trace
+Unable to capture context for thread 3608 in process 8480, can not generate back trace
+Unable to capture context for thread 3932 in process 8480, can not generate back trace
 Exception at PC 0x00007FFD9148BB93
 Printing stacktrace...
 

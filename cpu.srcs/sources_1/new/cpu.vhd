@@ -1,21 +1,14 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company: Grand Valley State University
+-- Engineer: Jason Hunter
 -- 
 -- Create Date: 03/16/2017 05:19:26 PM
 -- Design Name: 
 -- Module Name: cpu - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- Project Name: EGR-426-Project-3
+-- Target Devices: Artix 7
+-- Description: This component is the CPU itself with the state machine and the 
+--  logic behind each phase.
 ----------------------------------------------------------------------------------
 
 
@@ -24,17 +17,6 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --use IEEE.NUMERIC_STD.ALL;
-
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
 
 entity cpu is
 PORT(clk : in STD_LOGIC;
@@ -88,8 +70,9 @@ signal ADDR : STD_LOGIC_VECTOR(8 downto 0);	         -- ADDRESS input of RAM
 signal RAM_WE : STD_LOGIC;
 
 -- ---------- Declare the state names and state variable -------------
-type STATE_TYPE is (Fetch, Operand, Memory, Load, Execute, WriteBack);
+type STATE_TYPE is (Fetch, Operand, Memory, Load, Execute, WriteBack, SetAddr);
 signal CurrState : STATE_TYPE;
+
 -- ---------- Declare the internal CPU registers -------------------
 signal PC : UNSIGNED(8 downto 0);
 signal IR : STD_LOGIC_VECTOR(7 downto 0);
@@ -97,6 +80,7 @@ signal MDR : STD_LOGIC_VECTOR(7 downto 0);
 	
 signal A,B : SIGNED(7 downto 0);
 signal N,Z,V : STD_LOGIC;
+
 -- ---------- Declare the common data bus ------------------
 signal DATA : STD_LOGIC_VECTOR(7 downto 0);
 
@@ -114,12 +98,12 @@ signal Exc_BCDO : STD_LOGIC;
 signal Exc_PWM : STD_LOGIC;
 signal Exc_CLRB : STD_LOGIC;
 
-----------------------------Temp Outport variables----------------------
+--------------------Temp Outport variables and flags----------------------
 signal tempOut0, tempOut1 : STD_LOGIC_VECTOR (3 downto 0) := (others => '0');
 signal tempBitNum : STD_LOGIC_VECTOR(2 downto 0);
 signal tempWriteBack : UNSIGNED(7 downto 0);
 signal fourPhaseFlag : STD_LOGIC;
-signal sixPhaseFlag : STD_LOGIC;
+signal sevenPhaseFlag : STD_LOGIC;
 -- -----------------------------------------------------
 -- END SIGNAL DECLARATIONS
 -- -----------------------------------------------------
@@ -144,9 +128,9 @@ end function;
 
 -- -----------------------------------------------------
 -- This function returns TRUE if the given op code is a
--- 5-phase instruction rather than a 2-phase instruction
+-- 7-phase instruction rather than a 2-phase instruction
 -- -----------------------------------------------------	
-function Is5Phase(constant DATA : STD_LOGIC_VECTOR(7 downto 0)) return BOOLEAN is
+function Is7Phase(constant DATA : STD_LOGIC_VECTOR(7 downto 0)) return BOOLEAN is
 variable MSB4 : STD_LOGIC_VECTOR(2 downto 0);
 variable RETVAL : BOOLEAN;
 begin
@@ -206,8 +190,6 @@ begin
 return retval;
 
 end function;
-
-
 	
 begin
 -- ------------ Instantiate the ALU component ---------------
@@ -234,39 +216,50 @@ begin
 end process;
 	
 -- ---------------- Generate address bus --------------------------
---with CurrState select
---	 ADDR <= STD_LOGIC_VECTOR(PC) when Fetch,
---			 STD_LOGIC_VECTOR(PC) when Operand,  -- really a don't care
---			 IR(1) & MDR when Memory,
---			 STD_LOGIC_VECTOR(PC) when Execute,
---			 IR(1) & MDR  when WriteBack,
---			 STD_LOGIC_VECTOR(PC) when others;   -- just to be safe
 
 process (CurrState)
 begin
 
+--If current state is Fetch then set Address to the PC
 if (CurrState = Fetch) then
     ADDR <= STD_LOGIC_VECTOR(PC);
+
+--If current state is Operand then set Address to the PC
 elsif (CurrState = Operand) then
     ADDR <= STD_LOGIC_VECTOR(PC);
-    
+
+--If current state is Memory then set Address to the memory location
 elsif (CurrState = Memory) then
     ADDR <= IR(1) & MDR;
     
+--If current state is Load then set Address to the memory location  
 elsif (CurrState = Load) then
    ADDR <= IR(1) & MDR;
-        
+
+--If current state is Fetch then set Address to the PC        
 elsif (CurrState = Execute) then
-    if(sixPhaseFlag = '0') then
+    --If instruction is a 2 or 4 phase then set address to PC
+    if(sevenPhaseFlag = '0') then
     ADDR <= STD_LOGIC_VECTOR(PC);    
+    
+    --If instruction has 7 phases then set address to the memory location
     else
     ADDR <= IR(1) & MDR;
     end if;    
-    
+
+--If current state is WriteBack then set Address to the memory location
+-- This is important because this address will need to be the address that
+-- we are writing back to
 elsif (CurrState = WriteBack) then
-    --ADDR <= STD_LOGIC_VECTOR(PC); 
     ADDR <= IR(1) & MDR;  
 
+--If current state is Fetch then set Address to the PC    
+-- This is important because we need to set the address to the PC
+-- the clock cycle before the next instruction's fetch phase.
+elsif (CurrState = SetAddr) then
+    ADDR <= STD_LOGIC_VECTOR(PC); 
+
+--Just in case
 else
     ADDR <= STD_LOGIC_VECTOR(PC);            
 
@@ -275,11 +268,12 @@ end if;
 end process;
 				
 -- --------------------------------------------------------------------
--- This is the next-state logic for the 4-phase state machine.
+-- This is the next-state logic for the 7-phase state machine.
 -- --------------------------------------------------------------------
 process (clk,reset)
 variable temp : integer;
 begin
+    --If user pressed reset
   if(reset = '1') then
 	 CurrState <= Fetch;
 	 PC <= (others => '0');
@@ -297,45 +291,51 @@ begin
      PWMout <= (others => '0');
 	 temp := 0;
 	 fourPhaseFlag <= '0';
-	 sixPhaseFlag <= '0';
+	 sevenPhaseFlag <= '0';
   elsif(rising_edge(clk)) then
 	 case CurrState is
 ------------------- Fetch/Operand --------------------------
 		  when Fetch => IR <= DATA;
+		              --If the instruction has 4 phases then proceed normally and set 4 phase flag
 					    if(Is4Phase(DATA)) then
 						   PC <= PC + 1;
 						   temp := temp + 1;
 						   fourPhaseFlag <= '1';
-						   sixPhaseFlag <= '0';
+						   sevenPhaseFlag <= '0';
 						   CurrState <= Operand;
 						   
-						elsif (Is5Phase(DATA)) then
+					--If the instruction has 7 phases then proceed normally and set 7 phase flag	   
+						elsif (Is7Phase(DATA)) then
 						PC <= PC + 1;
                         temp := temp + 1;
                         fourPhaseFlag <= '0';
-                        sixPhaseFlag <= '1';
-                        --Converting the 3 bits to an integer
-                        tempBit <= DecoderBit(tempBitNum);          --Bit number 
+                        sevenPhaseFlag <= '1';
                         
+                        --Proceed to operand
                         CurrState <= Operand;
                         
+                        --If the instruction only has 2 phases then proceed to execute
 					    else
 					       fourPhaseFlag <= '0';
-					       sixPhaseFlag <= '0';
+					       sevenPhaseFlag <= '0';
 						   CurrState <= Execute;
 					    end if;
 ------------------- Operand --------------------------
-		 when Operand => MDR <= DATA;
+		 when Operand =>
+		  MDR <= DATA; --Set the MDR
 		 tempBitNum <= IR(4 downto 2); --Last 3 bits of instruction was the bit number to change
-					     CurrState <= Memory;
+		CurrState <= Memory; --Proceed to Memory state
 
 ------------------- Memory --------------------------
 		 when Memory => 
-		 if(sixPhaseFlag = '1') then
+		 --If instruction has seven phases
+		 if(sevenPhaseFlag = '1') then
 		 --Converting the 3 bits to an integer
-         tempBit <= DecoderBit(tempBitNum); --Bit number 		 
+         --Part of the CLRB 
+         tempBit <= DecoderBit(tempBitNum);	 
 		 CurrState <= Load;
 
+        --If instruction is 4 phase then proceed to execute
 		 else
 		 CurrState <= Execute;
 		 end if;
@@ -346,15 +346,16 @@ begin
 ------------------- Execute --------------------------				
 		 when Execute => if(temp = 2) then 
 		                    PC <= "000000010";
-					    elsif(sixPhaseFlag = '1') then --Make sure PC does not change if it is going to WriteBack state
-					    PC <= PC;					    
+					    elsif(sevenPhaseFlag = '1') then --Make sure PC does not change if it is going to WriteBack state
+					    PC <= PC;			
+					    --If instruction is 4 phase then increment PC		    
 					    else
                             PC <= PC + 1;
                             temp := temp +1;
 					     end if;
 					     
 					     --Check if instruction needs to go to WriteBack phase
-					     if(sixPhaseFlag = '1') then
+					     if(sevenPhaseFlag = '1') then
 					     CurrState <= WriteBack;
 					     else
 					     CurrState <= Fetch;
@@ -388,12 +389,13 @@ begin
                           end if;
                           
                         if(Exc_PWM = '1') then                                                   
-                        PWMout <= DATA;
+                        PWMout <= DATA; --Set the PWM output to the value that is currently in DATA bus
                         end if;
                        
 ------------------- WriteBack --------------------------
-    when WriteBack =>
+    when WriteBack => 
  
+    --Check the condition flags after clearing a certain bit number
     if(DATA = X"00") then
     Z <= '1';
     elsif ( DATA(7) = '1') then
@@ -402,12 +404,14 @@ begin
     Z <= '0';
     N <= '0';
     end if;
- 
-   --Increment counter
-    --PC <= PC + 2;
-     CurrState <= Fetch;                       
+    
+    --Go to SetAddr phase
+    CurrState <= SetAddr;   
      
-			when Others => CurrState <= Fetch;
+------------------- SetAddr --------------------------
+     when SetAddr => CurrState <= Fetch;           
+     
+when Others => CurrState <= Fetch;
 			
 
 		end case;
@@ -441,8 +445,8 @@ case CurrState is
 
 ------------------- Memory --------------------------						
 	 when Memory => 
-	                --If its a 6 phase instruction then get DATA out of RAM
-	                if(sixPhaseFlag = '1') then
+	                --If its a 7 phase instruction then get DATA out of RAM
+	                if(sevenPhaseFlag = '1') then
 	                --Recieving DATA from RAM
                     DATA <= RAM_DATA_OUT; 
 	               else
@@ -456,7 +460,7 @@ case CurrState is
                    end if;
 
 ------------------- Load --------------------------						
-	 when Load => DATA <= RAM_DATA_OUT;  --If its a 6 phase instruction then get DATA out of RAM
+	 when Load => DATA <= RAM_DATA_OUT;  --If its a 7 phase instruction then get DATA out of RAM
 
                    
 ------------------- Execute --------------------------				
@@ -556,12 +560,16 @@ case CurrState is
                            "0011110" =>
                            
                         --Changing particular bit number of DATA
+                        --If clearing 7th bit then concatenate with 0
                         if (tempBit = 7) then
                             DATA <= '0' & DATA(6 downto 0);
+                        --If clearing 0th bit then concatenate with 0
                         elsif(tempBit = 0) then
                             DATA <= DATA(7 downto 1) & '0';
                         else
                         
+                        --Go through all remaining bit numbers (1 - 6) and clear them
+                        -- by concatenatig 0 at the bit number location
                         case tempBit is
                         when 1 => DATA <= ( DATA(7 downto 2) & '0' ) & DATA(0);
                         when 2 => DATA <= ( DATA(7 downto 3) & '0' ) & DATA(1 downto 0);
@@ -570,7 +578,6 @@ case CurrState is
                         when 5 => DATA <= ( DATA(7 downto 6) & '0' ) & DATA(4 downto 0);
                         when 6 => DATA <= ( DATA(7) & '0' ) & DATA(5 downto 0);
                         when others => DATA <= X"01";                             
-                       --DATA <= DATA & ~(1 << tempBit) Other way of clearing bit
                         end case;
                           
                        end if;  
@@ -583,6 +590,11 @@ case CurrState is
                                
  ------------------- WriteBack --------------------------	                              
      when WriteBack => DATA <= DATA;
+ 
+  ------------------- SetAddr --------------------------	    
+     when SetAddr => null;
+     
+     when others => null;
      
 		end case;	
 end process;

@@ -1,21 +1,13 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company: Grand Valley State University
+-- Engineer: Jason Hunter
 -- 
 -- Create Date: 04/14/2018 09:35:00 PM
 -- Design Name: 
 -- Module Name: PWM - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- Project Name: EGR-426-Project-3
+-- Target Devices: Artix 7
+-- Description: PWM block that generates a 1KHz square wave with varying duty cycle.
 ----------------------------------------------------------------------------------
 
 
@@ -23,15 +15,6 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity PWM is
     Port ( clk : in STD_LOGIC;
@@ -53,14 +36,18 @@ begin
 process (clk)
 begin
     if(rising_edge(clk)) then
+    --If counter is less than the cycle count and hasn't reached the max
+    -- then turn on LED
      if(counter <= cycleCount and counter /= 0) then
         outSignalTemp <= '1';
      else
         outSignalTemp <= '0';
      end if;
      
+     --Increment counter
      counter <= counter + 1;
      
+     --Reset counter
      if (counter = 15) then
      counter <= 0;
      end if;

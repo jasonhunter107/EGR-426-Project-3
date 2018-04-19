@@ -1,21 +1,13 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company: Grand Valley State University
+-- Engineer: Jason Hunter
 -- 
 -- Create Date: 03/28/2018 05:03:30 PM
 -- Design Name: 
 -- Module Name: clk_divider - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- Project Name: EGR-426-Project-3
+-- Target Devices: Artix 7
+-- Description: A Top level component of the CPU
 ----------------------------------------------------------------------------------
 
 
@@ -34,7 +26,7 @@ use IEEE.STD_LOGIC_unsigned.ALL;
 
 entity clk_divider is
     port ( clkin, reset : in STD_LOGIC;
-           clkout_1Hz, clkout_500Hz : out STD_LOGIC
+           clkout_1Hz, clkout_500Hz, clkout_1KHz : out STD_LOGIC
           );
 end clk_divider;
 
@@ -45,11 +37,13 @@ architecture Behavioral of clk_divider is
 
 signal clkPreScaler: STD_LOGIC_VECTOR (27 downto 0) := X"2FAF07F"; --Hex value of 99,999,999 cycles 5F5E0FF
 signal clkPreScaler1: STD_LOGIC_VECTOR (19 downto 0) := X"30D3F"; --Hex value of 199,999 cycles
+signal clkPreScaler2: STD_LOGIC_VECTOR (19 downto 0) := X"1869F"; --Hex value of 99,999 cycles - 1KHZ
 
 signal clkCounter: STD_LOGIC_VECTOR (27 downto 0) := (others => '0'); --Clock counter
-signal clkCounter1: STD_LOGIC_VECTOR (19 downto 0) := (others => '0'); --Clock counter
+signal clkCounter1: STD_LOGIC_VECTOR (19 downto 0) := (others => '0'); --Clock counter 
+signal clkCounter2: STD_LOGIC_VECTOR (19 downto 0) := (others => '0'); --Clock counter 
 
-signal count0, count1 : STD_LOGIC := '0'; --output
+signal count0, count1, count2 : STD_LOGIC := '0'; --output
 
 begin
 
@@ -79,8 +73,22 @@ begin
     end if;
 end process;
 
+newClock3_1KHz: process (clkin, count2)
+begin
+    --Increment the counter every rising edge of clock
+    if rising_edge(clkin) then
+    clkCounter2 <= clkCounter2 + 1;
+    --If the counter reached maximum value then reset clock counter and toggle count
+        if (clkCounter2 > clkPreScaler2) then
+        count2 <= not count1;
+        clkCounter2 <= (others => '0');
+        end if;
+    end if;
+end process;
+
 --Assign count to output
 clkout_1Hz <= count0;
 clkout_500Hz <= count1;
+clkout_1KHz <= count2;
 
 end Behavioral;
